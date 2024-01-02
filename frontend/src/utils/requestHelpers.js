@@ -7,13 +7,13 @@ export async function makeRequest(method, path, options, headers, others) {
     switch (method) {
         case 'GET' || 'DELETE':
             const queryParameters = new URLSearchParams(options).toString();
-            return await fetch(`${backendAddress}${PATHS[path]}?${queryParameters}`,{
+            return await fetch(`${PATHS[path]}?${queryParameters}`,{
                 method: 'GET',
                 headers,
                 ...others,
             })
         case 'POST' || 'PUT':
-            return await fetch(`${backendAddress}${PATHS[path]}`,{
+            return await fetch(`${PATHS[path]}`,{
                 method: 'POST',
                 body: JSON.stringify(options),
                 headers,
