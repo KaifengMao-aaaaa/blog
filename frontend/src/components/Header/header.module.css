@@ -1,0 +1,24 @@
+header{
+    display: flex;
+    margin-top: 30px;
+    font-size: 18px;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    align-items: center;
+}
+header a{
+    text-decoration: none;
+    color: inherit;
+}
+.logo{
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.afterLogin {
+    gap: 15px;
+    display: flex;
+}
+.beforeLogin {
+    gap: 15px;
+    display: flex;
+}

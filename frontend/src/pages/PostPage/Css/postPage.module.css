@@ -1,0 +1,37 @@
+.body {
+    margin: 0 auto;
+    width: 900px;
+    height: 1000px;
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 50px;
+}
+.titleArea {
+    display: grid;
+    grid-template-columns: 0.7fr 0.4fr;
+}
+.infoArea {
+    display: grid;
+    grid-template-rows: 1.2fr 0.1fr 1.6fr;
+    margin: 10px;
+
+}
+.homeButton {
+    margin: 0 auto;
+    color: rgb(255, 255, 255);
+    outline: none;
+    width: 300px;
+    font-size: 20px;
+    border-radius: 30px;
+    background-color: black;
+}
+.infoArea div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.desc {
+}
+.contentArea {
+    background-color: bisque;
+    padding: 0 10px;
+}
