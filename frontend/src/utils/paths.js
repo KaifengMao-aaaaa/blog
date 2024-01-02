@@ -1,14 +1,14 @@
 
 const PATHS = {
-    'USER_REGISTER': '/user/register',
-    'USER_LOGIN': '/user/login',
-    'USER_LOGOUT': '/user/logout',
-    'USER_GETNAME': '/user/getName',
-    'USER_PROFILE': '/user/profile',
-    "POST_PUBLISH": '/post/publish',
-    'POST_GET': '/post/get',
-    'POST_GETONE': '/post/getOne',
-    'POST_GETDRAFTS': '/post/getDrafts',
+    'USER_REGISTER': '/api/user/register',
+    'USER_LOGIN': '/api/user/login',
+    'USER_LOGOUT': '/api/user/logout',
+    'USER_GETNAME': '/api/user/getName',
+    'USER_PROFILE': '/api/user/profile',
+    "POST_PUBLISH": '/api/post/publish',
+    'POST_GET': '/api/post/get',
+    'POST_GETONE': '/api/post/getOne',
+    'POST_GETDRAFTS': '/api/post/getDrafts',
    
 }
 export default PATHS;

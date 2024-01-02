@@ -15,14 +15,14 @@ app.use(cookieParser());
 app.use(cors({credentials: true, origin:'http://localhost:3000'}));
 
 // public routers
-app.use('/user', publicUserModule);
+app.use('/api/user', publicUserModule);
 
 //authorization middlewares
-app.use('/', authorization);
+app.use('/api', authorization);
 // private routers
-app.use('/user', privateUserModule);
-app.use('/post', privatePostModule);
-app.get('/', async (req:Request,res:Response) => {
+app.use('/api/user', privateUserModule);
+app.use('/api/post', privatePostModule);
+app.get('/api', async (req:Request,res:Response) => {
 });
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
