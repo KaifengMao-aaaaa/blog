@@ -10,18 +10,6 @@ module.exports = {
     env_development: {
       NODE_ENV: "development"
     } 
-  }, {
-    name   : "frontend",
-    script : "npm",
-    args: "build",
-    cwd: "./frontend",
-    env_production: {
-      NODE_ENV: 'production'
-    },
-    env_development: {
-      NODE_ENV: "development"
-    } 
-    
   }],
   deploy: {
     production: {
@@ -30,7 +18,7 @@ module.exports = {
       ref: "origin/main",
       repo: "git@github.com:KaifengMao-aaaaa/blog.git",
       path: "/root/projects/blog",
-      "post-deploy": "pm2 startOrRestart ecosystem.config.js --env production",
+      "post-deploy": "pm2 startOrRestart ecosystem.config.js --env production && cd frontend && npm run build",
       "post-setup": "cd backend && npm i && cd .. && cd frontend && npm i",
     }
 }
