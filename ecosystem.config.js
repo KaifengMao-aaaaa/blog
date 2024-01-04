@@ -29,12 +29,9 @@ module.exports = {
       host: "81.71.102.71",
       ref: "origin/main",
       repo: "git@github.com:KaifengMao-aaaaa/blog.git",
-      path: "/root/projects/blog_pm2",
-      "post-deploy": "pm2 start ecosystem.config.js",
+      path: "/root/projects/blog",
+      "post-deploy": "pm2 startOrRestart ecosystem.config.js --env production",
       "post-setup": "cd backend && npm i && cd .. && cd frontend && npm i",
-      env: {
-        NODE_ENV: "NODE" 
-      },
     }
 }
 }
