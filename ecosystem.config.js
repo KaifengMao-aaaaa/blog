@@ -18,8 +18,8 @@ module.exports = {
       ref: "origin/main",
       repo: "git@github.com:KaifengMao-aaaaa/blog.git",
       path: "/root/projects/blog",
-      "post-deploy": "bash deploy_update && pm2 startOrRestart ecosystem.config.js --env production",
-      "post-setup": "bash deploy_setup",
+      "post-deploy": "bash deploy_update.sh && pm2 startOrRestart ecosystem.config.js --env production",
+      "post-setup": "bash deploy_setup.sh",
     }
 }
 }
