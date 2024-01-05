@@ -13,6 +13,7 @@ const QUERIES = {
         SELECT_ONE_POST: "SELECT p.id, p.title, p.banner, p.content, p.des, p.author, p.is_draft, p.publish_time , string_agg(h.name, ',') as tags FROM posts p LEFT JOIN HAVE_TAG h ON p.id = h.post_id WHERE p.id = $1 GROUP BY p.id"
     },
     REMOVE_TOKEN: "DELETE FROM GET_TOKEN WHERE user_id = $1 and token = $2",
+    REMOVE_POST: "DELETE FROM POSTS WHERE id = $1",
     UPDATE_POST: "UPDATE POSTS SET title = $1, banner = $2, content = $3, des = $4, author = $5, is_draft = $6 WHERE id = $7",
 }
 export default QUERIES;

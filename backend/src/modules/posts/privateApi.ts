@@ -4,5 +4,6 @@ const router = express.Router()
 router.post('/publish', userModule.publish);
 router.get('/get', userModule.get);
 router.get('/getOne', userModule.getOne);
+router.delete('/deleteOne', userModule.deleteOne);
 router.get('/getDrafts', userModule.getDrafts);
 export default router;

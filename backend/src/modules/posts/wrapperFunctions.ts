@@ -60,4 +60,13 @@ async function getDrafts(req: Request, res: Response) {
         console.log(e);
     }
 }
-export default {publish, get, getOne, getDrafts};
+async function deleteOne(req: Request, res: Response) {
+    try {
+        const {postId} = req.query;
+        await db.queryPool(dbQuery.REMOVE_POST, [Number(postId)]);
+        res.json({});
+    } catch(e) {
+        console.log(e)
+    }
+}
+export default {publish, get, getOne, getDrafts, deleteOne};

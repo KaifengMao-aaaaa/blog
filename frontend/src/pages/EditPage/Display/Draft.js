@@ -1,4 +1,4 @@
-import {useEffect, useState } from 'react';
+import {useContext, useEffect, useState } from 'react';
 import styles from '../Css/draft.module.css';
 import { makeRequest } from '../../../utils/requestHelpers';
 import DraftPost from '../components/DraftPost';
@@ -15,8 +15,10 @@ function Draft() {
                 }
             })
     }, [])
-
-    const renderedPosts = posts.map(post => <DraftPost key={post.post_id} post={post}/>)
+    const handleDeletePost = (postId) => {
+        setPosts(posts.filter(post => post.post_id !== postId));
+    };
+    const renderedPosts = posts.map(post => <DraftPost key={post.post_id} post={post} onDelete={() => handleDeletePost(post.post_id)}/>)
     return <div className={styles.body}>
         {renderedPosts}
     </div>

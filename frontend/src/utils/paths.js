@@ -9,6 +9,7 @@ const PATHS = {
     'POST_GET': '/api/post/get',
     'POST_GETONE': '/api/post/getOne',
     'POST_GETDRAFTS': '/api/post/getDrafts',
+    'POST_DELETEONE': '/api/post/deleteOne'
    
 }
 export default PATHS;

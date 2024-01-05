@@ -1,20 +1,21 @@
 import PATHS from "./paths";
-const backendAddress = 'http://localhost:4001';
 export async function makeRequest(method, path, options, headers, others) {
     if (PATHS[path] == null) {
         return Promise.reject(new Error("The path does not exist"));
     }
     switch (method) {
-        case 'GET' || 'DELETE':
+        case 'DELETE':
+        case 'GET':
             const queryParameters = new URLSearchParams(options).toString();
             return await fetch(`${PATHS[path]}?${queryParameters}`,{
-                method: 'GET',
+                method: method,
                 headers,
                 ...others,
             })
-        case 'POST' || 'PUT':
+        case 'PUT':
+        case 'POST':
             return await fetch(`${PATHS[path]}`,{
-                method: 'POST',
+                method: method,
                 body: JSON.stringify(options),
                 headers,
                 ...others,

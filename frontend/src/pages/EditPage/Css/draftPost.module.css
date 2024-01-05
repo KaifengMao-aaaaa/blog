@@ -13,7 +13,8 @@
 .textsArea {
     grid-area: texts;
     display: grid;
-    grid-template-rows: 0.6fr 1fr 0.5fr 1fr;
+    gap: 10px;
+    grid-template-rows: 0.6fr 1fr 0.5fr 0.5fr;
 }
 .titleArea {
     margin: 0;

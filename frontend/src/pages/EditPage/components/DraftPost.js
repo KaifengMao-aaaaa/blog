@@ -2,13 +2,18 @@ import { useContext, useState } from 'react';
 import styles from '../Css/draftPost.module.css';
 import { EditContext } from '../EditPage';
 import { Navigate } from 'react-router-dom';
-export default function DraftPost({post}) {
+import { makeRequest } from '../../../utils/requestHelpers';
+export default function DraftPost({post, onDelete}) {
     const date = new Date(post.publish_time);
-    const {setBlog, setEditState} = useContext(EditContext);
+    const {setEditState} = useContext(EditContext);
     const [direct, setDirect] = useState(null);
-    function handleClick(e) {
+    function handleEditClick(e) {
         setDirect(`/edit/${post.post_id}`)
         setEditState('Edit');
+    }
+    function handleDeleteClick(e) {
+        makeRequest('DELETE', 'POST_DELETEONE', {postId: post.post_id}, {'Content-Type': 'application/json'}, {credentials:'include'})
+        onDelete();
     }
     if (direct) {
         return <Navigate to={direct}/>;
@@ -21,7 +26,8 @@ export default function DraftPost({post}) {
             <div className={styles.textsArea}>
                 <h2 className={styles.titleArea}>{post.title}</h2>
                 <p className={styles.labelArea}>{`Last Modified: ${date.toLocaleTimeString() +'  '+ date.toLocaleDateString()}`}</p>
-                <button className={styles.buttonArea} onClick={handleClick}>Continue Edit</button>
+                <button className={styles.buttonArea} onClick={handleEditClick}>Continue Edit</button>
+                <button className={styles.buttonArea} onClick={handleDeleteClick}>Delete</button>
                 <div></div>
             </div>
         </div>

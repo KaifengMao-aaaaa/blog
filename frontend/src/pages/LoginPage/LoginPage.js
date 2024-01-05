@@ -5,8 +5,10 @@ import './loginPage.css';
 import { UserContext } from "../../UserContext";
 import AnimationWrapper from "../../components/Animation/AnimationWrapper";
 import { defaultSolveException } from "../../utils/helpers";
+import { GlobalLoadingContext } from "../../GlobalLoading";
 export default function LoginPage() {
     const {userInfo, setUserInfo} = useContext(UserContext);
+    const {globalLoading, setGlobalLoading} = useContext(GlobalLoadingContext);
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
     const [redirect,setRedirect] = useState(false)
@@ -14,7 +16,11 @@ export default function LoginPage() {
         e.preventDefault();
         const response = await makeRequest('POST','USER_LOGIN', {username, password},{'Content-Type': 'application/json'}, {credentials: 'include'});
         if (response.ok) {
-            response.json().then(userInfo => setUserInfo(userInfo))
+            await response.json().then(userInfo => {
+                setUserInfo(userInfo);
+                localStorage.setItem('username', userInfo.username);
+            })
+            setGlobalLoading({...globalLoading, userContextLoading: true});
             setRedirect(true);
         } else {
             defaultSolveException(response);
