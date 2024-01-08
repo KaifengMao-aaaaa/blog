@@ -25,10 +25,10 @@ function App() {
           </Route>
           <Route path='/' element={<HomePageLayout/>}>
             <Route index element={<ProtectedRouter element={<HomePage/>}/>}/>
-            <Route path='register' element={<RegisterPage/>}/>
           </Route>
-          <Route path='/login' element={<LoginPageLayout/>}>
-            <Route index element={<LoginPage/>}/>
+          <Route path='/' element={<LoginPageLayout/>}>
+            <Route path='register' element={<RegisterPage/>}/>
+            <Route path='login' element={<LoginPage/>}/>
           </Route>
           <Route path='/post' element={<PostPageLayout/>}>
             <Route path=':postId' element={<ProtectedRouter element={<PostPage/>}/>}/>

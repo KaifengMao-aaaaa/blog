@@ -21,7 +21,15 @@ form button {
     border-radius: 5px;
     padding: 10px 0;
     font-size: 20px;
+    cursor: pointer;
 }
 form h1 {
     text-align: center;
+}
+.loginPage-register {
+    align-items: center;
+    border: 0;
+    background: none;
+    color: #555;
+    font-size: 15px;
 }

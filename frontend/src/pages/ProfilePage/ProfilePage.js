@@ -1,6 +1,6 @@
 import SquarePost from '../../components/Posts/squarePost/SquarePost';
 import './profilePage.css'
-
+import { blogStructure } from '../../utils/blogSimple';
 const ProfilePage = () => {
     return (<div className='profilePage-main'>
         <div className='profilePage-main-introduction'>
@@ -15,10 +15,10 @@ const ProfilePage = () => {
             </div>
         </div>
         <div className='profilePage-main-body'>
-            <SquarePost/>
-            <SquarePost/>
-            <SquarePost/>
-            <SquarePost/>
+            <SquarePost post={blogStructure}/>
+            <SquarePost post={blogStructure}/>
+            <SquarePost post={blogStructure}/>
+            <SquarePost post={blogStructure}/>
         </div>
         <div className='profilePage-main-bottom'>
             <p>Page 1 of 2</p>

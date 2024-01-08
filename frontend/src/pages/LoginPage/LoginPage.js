@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import {makeRequest} from '../../utils/requestHelpers'
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import './loginPage.css';
 import { UserContext } from "../../UserContext";
 import AnimationWrapper from "../../components/Animation/AnimationWrapper";
@@ -12,6 +12,7 @@ export default function LoginPage() {
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
     const [redirect,setRedirect] = useState(false)
+    const navigate = useNavigate();
     const login = async (e) => {
         e.preventDefault();
         const response = await makeRequest('POST','USER_LOGIN', {username, password},{'Content-Type': 'application/json'}, {credentials: 'include'});
@@ -46,6 +47,7 @@ export default function LoginPage() {
                     value={password}
                 />
                 <button onClick={login}>login</button>
+                <button className="loginPage-register" onClick={() => navigate('/register')}>Sign up now</button>
             </form>
         </AnimationWrapper>
     )
