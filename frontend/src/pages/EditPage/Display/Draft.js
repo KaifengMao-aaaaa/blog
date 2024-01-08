@@ -19,8 +19,8 @@ function Draft() {
         setPosts(posts.filter(post => post.post_id !== postId));
     };
     const renderedPosts = posts.map(post => <DraftPost key={post.post_id} post={post} onDelete={() => handleDeletePost(post.post_id)}/>)
-    return <div className={styles.body}>
-        {renderedPosts}
-    </div>
+    return (<div className='draft-main'>
+        it is me
+    </div>)
 }
 export default Draft;

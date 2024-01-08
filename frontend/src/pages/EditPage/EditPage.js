@@ -4,13 +4,13 @@ import { Navigate, useParams } from "react-router-dom";
 import Edit from "./Display/Edit";
 import styles from './Css/editPage.module.css'
 import Preview from "./Display/Preview";
-import EditHeader from "./components/EditHeader";
 import Publish from "./Display/Publish";
 import { GlobalLoadingContext } from "../../GlobalLoading";
 import Loading from "../../components/Loading/Loading";
 import { makeRequest } from "../../utils/requestHelpers";
 import Draft from "./Display/Draft";
 import { defaultSolveException } from "../../utils/helpers";
+import { EditPageContext } from "../../layouts/EditPageContext";
 const blogStructure = {
     id: null,
     title: '',
@@ -26,8 +26,9 @@ export const EditContext = createContext({});
 export function EditPage() {
     const {userInfo} = useContext(UserContext);
     const {globalLoading, setGlobalLoading} = useContext(GlobalLoadingContext);
-    const [editState, setEditState] = useState('DraftList');
-    const [blog, setBlog] = useState(blogStructure);
+    const {editState, setEditState, blog, setBlog} = useContext(EditPageContext)
+    // const [editState, setEditState] = useState('Edit');
+    // const [blog, setBlog] = useState(blogStructure);
     const {postId} = useParams();
     useEffect(() => {
         if (postId) {
@@ -68,18 +69,20 @@ export function EditPage() {
         return (<Navigate to = "/login"/>)
     }
     return (
-        <EditContext.Provider value={{blog, setBlog, editState, setEditState}}>
-        <div className={styles.outsideContainer}>
-            <div className={styles.container} id="EditPage-Container">
-                <EditHeader/>
-                <div className={styles.mainArea}>
+        // <EditContext.Provider value={{blog, setBlog, editState, setEditState}}>
+        <div >
+            <div  id="EditPage-Container">
+                {/* <Edit/> */}
+                {/* <Preview/> */}
+                <div >
                     {editState === 'Preview' && (<Preview/>)}
+                    {editState === 'Edit' && (<Edit/>)}
                     {editState === 'Publish' && <Publish/>}
-                    {editState === 'Edit' && <div className={styles.BothContainer}><Preview/><div className={styles.divider} id="EditPage-divided"></div><Edit/></div>}
-                    {editState === 'DraftList' && <Draft/>}
+                    {/* {editState === 'Edit' && <div className={styles.BothContainer}><Preview/><div className={styles.divider} id="EditPage-divided"></div><Edit/></div>} */}
+                    {/* {editState === 'DraftList' && <Draft/>} */}
                 </div>
             </div>
         </div>
-        </EditContext.Provider>
+        // </EditContext.Provider>
     )
 }

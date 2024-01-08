@@ -1,7 +1,9 @@
 import {useEffect, useState } from "react";
-import Post from "../../components/Post/Post.js";
 import { makeRequest } from "../../utils/requestHelpers.js";
 import { defaultSolveException } from "../../utils/helpers.js";
+import HomePost from "../../components/Posts/homePost/HomePost.js";
+import './homePage.css'
+import SideBar from "./SideBar.js";
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
@@ -16,11 +18,14 @@ export default function HomePage() {
             })
     }, [])
     const renderedPosts = posts.map((post, index) => {
-        return <Post key={post.post_id} post={post}/>
+        return <HomePost key={post.post_id} post={post}/>
     })
     return (
-        <div>
-            {renderedPosts}
+        <div className="homePage-main">
+            <div className="homePage-blog-area">
+                {renderedPosts}
+            </div>
+            <SideBar/>
         </div>
     )
 }

@@ -23,6 +23,7 @@ export default function Post({post}) {
                 </p>
                 <p className={styles.summary}>{post.des}</p>
             </div>
+            
       </div>
     )
 }

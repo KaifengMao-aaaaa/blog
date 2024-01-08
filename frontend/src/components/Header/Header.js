@@ -1,8 +1,8 @@
-import { Link} from "react-router-dom";
 import { useContext, useEffect} from "react";
+import downArrow from './downArrow.png'
 import {makeRequest} from '../../utils/requestHelpers';
 import { UserContext } from "../../UserContext";
-import styles from './header.module.css';
+import './header.css';
 import { defaultSolveException } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 export default function Header() {
@@ -31,23 +31,29 @@ export default function Header() {
   }
   const username = userInfo ? userInfo.username : undefined; 
   return (
-    <header>
-      <a href = "/" className= {styles.logo}>Blog</a>
-      <nav>
-        {!username && 
-          <div className= {styles.beforeLogin}>
-            <Link to= "/login">Login</Link>
-            <Link to = "/register">Register</Link>
-          </div>
-        }
-        {username && (
-            <div className= {styles.afterLogin}>
-              <Link className = 'writeButton' to = '/edit'>Write</Link>
-              <a className = 'logoutButton' onClick={logout}>Logout</a>
-            </div>
-          )
-        }
-      </nav>
+    <header className="homeNavbar-body">
+      <div className="homeNavbar-body-main">
+        <div className="homeNavbar-body-container">
+          <button onClick={() => navigate('/')}>Home</button>
+          <img src={downArrow}/>
+        </div>
+        <div className="homeNavbar-body-container">
+          <button onClick={() => navigate('/tags')}>#Tags</button>
+          <img src={downArrow}/>
+        </div>
+      </div>
+      <div className="homeNavbar-body-side">
+        <div className="homeNavbar-body-container">
+          <button onClick={() => navigate('/profile')}>Profile</button>
+        </div>
+        <div className="homeNavbar-body-container">
+          <button onClick={() => navigate('/edit')}>New Post</button>
+        </div>
+        <div className="homeNavbar-body-container">
+          <button onClick={logout}>Logout</button>
+        </div>
+      </div>
+
     </header>
   )
 }

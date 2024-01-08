@@ -1,0 +1,21 @@
+.previewDisplay-body {
+    position:absolute;
+    display: flex;
+    padding: 60px 0;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+}
+.previewDisplay-quit{
+    width: 40px;
+    position: absolute;
+    right: 140px;
+}
+.previewDisplay-body-container {
+    width: auto;
+    height: 650px;
+    overflow: scroll ;
+}

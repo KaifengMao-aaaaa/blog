@@ -1,9 +1,9 @@
 import styles from './tag.module.css'
 import closeIcon from './close.png';
 import { useContext } from 'react';
-import { EditContext } from '../../pages/EditPage/EditPage';
+import { EditPageContext } from '../../layouts/EditPageContext';
 function Tag({tag}) {
-    const {blog, setBlog} = useContext(EditContext);
+    const {blog, setBlog} = useContext(EditPageContext);
     function handleClickTag(e) {
         setBlog({...blog, tags: blog.tags.filter(t => tag !== t)});
     }

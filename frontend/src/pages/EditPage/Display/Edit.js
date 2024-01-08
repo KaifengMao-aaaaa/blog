@@ -1,41 +1,29 @@
-import styles from '../Css/edit.module.css';
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { EditContext } from "../EditPage";
 import { makeRequest } from '../../../utils/requestHelpers';
 import { UserContext } from '../../../UserContext';
 import { GlobalLoadingContext } from '../../../GlobalLoading';
 import Loading from '../../../components/Loading/Loading';
 import { defaultSolveException } from '../../../utils/helpers';
+import fullImg from '../../../utils/imgs/full.png';
+import MonacoEditor from 'react-monaco-editor';
+import upload from '../../../utils/imgs/upload.png'
+import './edit.css'
+import Markdown from 'react-markdown';
+import { EditPageContext } from "../../../layouts/EditPageContext";
 const Edit = () => {
-    const {blog, setBlog, editState} = useContext(EditContext);
+    const {blog, setBlog, editState, setEditState} = useContext(EditPageContext);
     const {userInfo} = useContext(UserContext);
     const {globalLoading} = useContext(GlobalLoadingContext)
+    const fileInputRef = useRef();
     useEffect(() => {
-        if (globalLoading.editContextLoading) {
-            if (editState === 'Edit') {
-                const currentElement = document.getElementById('blogEditor-body');
-                currentElement.className = styles.editBody;
-                const side = document.getElementById('blogEditor-contentArea');
-                side.className = styles.editBodyArea;
-                const intervalId = setInterval(() => {
-                    saveDraft();
-                }, 5000);
-                return () => {
-                    clearInterval(intervalId);
-                }
-            }
-        }
-    }, [blog])
+    }, [])
     function handleUpload(e) {
+        e.preventDefault()
         const img = e.target.files[0];
         if (img) {
             const url = URL.createObjectURL(img);
             setBlog({...blog, banner: url});
-            const width = img.width;
-            const section = document.getElementById('blogEditor-displayArea');
-            if (section) {
-                section.style.width = width;
-            }
         }
     }
     function saveDraft() {
@@ -48,16 +36,13 @@ const Edit = () => {
                 }
             });
     }
-    function handleContentChange(e) {
-        e.target.style.height = 'auto';
-        e.target.style.height = e.target.scrollHeight + window.screen.height / 2 + 'px';
-        setBlog({...blog, content: e.target.value});
-    }
-    function handleBannerError(e) {
-        e.target.src = 'https://soliloquywp.com/wp-content/uploads/2016/08/How-to-Set-a-Default-Featured-Image-in-WordPress.png'
+    function handleContentChange(newValue, e) {
+        setBlog(prevBlog => {
+            return {...prevBlog, content: newValue};
+        });
     }
     function handleTitleChange(e) {
-        e.target.style.height = e.target.scrollHeight  + 'px';
+        e.preventDefault();
         setBlog({...blog, title: e.target.value});
     }
     function handleTitleKeyDown(e) {
@@ -65,42 +50,63 @@ const Edit = () => {
             e.preventDefault();
         }
     }
+    function handleFullPreview(e) {
+        setEditState('Preview');
+    }
     if (!globalLoading.editContextLoading) {
         return <Loading/>;
     }
+    const editorOptions = {
+        selectOnLineNumbers: true,
+        roundedSelection: false,
+        readOnly: false,
+        cursorStyle: 'line',
+        automaticLayout: false,
+    };
     return (
-        <div className={styles.body} id="blogEditor-body">
-                <div className={styles.sourceCode}>
-                    Source Code
-                </div>
-                <div className={styles.imgArea}>
-                    <label htmlFor="blogEditor-uploadBanner">
-                        <img className={styles.bannerImg} src={blog.banner} onError={handleBannerError}/>
-                        <input
-                            id="blogEditor-uploadBanner"
-                            type="file"
-                            hidden
-                            onChange={handleUpload}
-                            accept=".pdf, .jpg, .jpeg"
+        <div className='editDisplay-main'>
+            <div className='editDisplay-main-titleArea'>
+                <p className='editDisplay-main-title-top'>TITLE</p>
+                <input className="editDisplay-main-title" placeholder={'Add Title'} value={blog.title} onChange={handleTitleChange}/>
+            </div>
+
+            <div className='editDisplay-body'>
+                <div className='editDisplay-body-source'>
+                    <div className='editDisplay-body-source-head'>
+                        <h3>MARKDOWN</h3>
+                    </div>
+                    <div className='editDisplay-body-source-lines'>
+                        <MonacoEditor
+                            width="auto"
+                            height="560px"
+                            language="markdown"
+                            theme="vs-light"
+                            value={blog.content}
+                            options={editorOptions}
+                            onChange={handleContentChange}
                         />
-                    </label>
+                    </div>
                 </div>
-                <textarea 
-                    className={styles.titleArea} 
-                    value={blog.title}
-                    placeholder="Post Title"
-                    onChange={handleTitleChange}
-                    onKeyDown={handleTitleKeyDown}
-                >
-                </textarea>
-                <textarea
-                    id = 'blogEditor-contentArea'
-                    className={styles.contentArea}
-                    value={blog.content}
-                    placeholder="Add Some Content"    
-                    onChange={handleContentChange}
-                >
-                </textarea>
+                <div className='editDisplay-body-preview'>
+                    <div className='editDisplay-body-preview-head'>
+                        <h3>PREVIEW</h3>
+                        <div className="editDisplay-body-preview-icons">
+                            <img src={upload} onClick={() => fileInputRef.current.click()}/>
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                style={{display:"none"}}
+                                onChange={handleUpload}
+                                accept=".pdf, .jpg, .jpeg"
+                            />
+                            <img onClick={handleFullPreview} src={fullImg}/>
+                        </div>
+                    </div>
+                    <div className='editDisplay-body-preview-markdown'>
+                        <Markdown children={blog.content}/>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
