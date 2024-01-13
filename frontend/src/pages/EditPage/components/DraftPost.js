@@ -1,35 +1,36 @@
 import { useContext, useState } from 'react';
-import styles from '../Css/draftPost.module.css';
-import { EditContext } from '../EditPage';
-import { Navigate } from 'react-router-dom';
+import './draftPost.css'
 import { makeRequest } from '../../../utils/requestHelpers';
+import { EditPageContext } from '../../../layouts/EditPageContext';
+import { useNavigate } from 'react-router-dom';
+import { getUrlToEditPage } from '../EditPage';
 export default function DraftPost({post, onDelete}) {
     const date = new Date(post.publish_time);
-    const {setEditState} = useContext(EditContext);
-    const [direct, setDirect] = useState(null);
+    const {setPost} = useContext(EditPageContext)
+    const navigate = useNavigate();
     function handleEditClick(e) {
-        setDirect(`/edit/${post.post_id}`)
-        setEditState('Edit');
+        setPost(post);
+        localStorage.setItem('post', JSON.stringify(post));   
+        navigate(getUrlToEditPage('edit', ''));
     }
-    function handleDeleteClick(e) {
-        makeRequest('DELETE', 'POST_DELETEONE', {postId: post.post_id}, {'Content-Type': 'application/json'}, {credentials:'include'})
-        onDelete();
-    }
-    if (direct) {
-        return <Navigate to={direct}/>;
-    }
-    return (
-        <div className={styles.post}>
-            <div className={styles.bannerArea}>
-                <img src='https://images.ctfassets.net/hrltx12pl8hq/vfJfws5pq5PK8xSX6I1bV/d542f5862da3701e2afe687e9efbeff6/hero-image-robot-.jpg?fit=fill&w=1200&h=675&fm=webp'/>
+    return ( <div className='draftPost-main'>
+        <div className='draftPost-main-banner'>
+            <img src={post.banner}/>
+        </div>
+        <div className='draftPost-main-body'>
+            <div className='draftPost-main-body-container'>
+                <h2>Draft name:</h2>
+                <p>{post.title}</p>
             </div>
-            <div className={styles.textsArea}>
-                <h2 className={styles.titleArea}>{post.title}</h2>
-                <p className={styles.labelArea}>{`Last Modified: ${date.toLocaleTimeString() +'  '+ date.toLocaleDateString()}`}</p>
-                <button className={styles.buttonArea} onClick={handleEditClick}>Continue Edit</button>
-                <button className={styles.buttonArea} onClick={handleDeleteClick}>Delete</button>
-                <div></div>
+            <div className='draftPost-main-body-container'>
+                <h2>Last modified:</h2>
+                <time>{date.toLocaleTimeString()}{'  '}{date.toLocaleDateString()}</time>
             </div>
         </div>
+        <div className='draftPost-main-buttons'>
+            <button onClick={handleEditClick}>Edit</button>
+            <button onClick={() => onDelete()}>Delete</button>
+        </div>
+    </div>
     )
 }

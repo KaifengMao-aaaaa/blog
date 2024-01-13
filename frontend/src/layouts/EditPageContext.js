@@ -1,6 +1,6 @@
-import { createContext, useState } from "react";
-const blogStructure = {
-    id: null,
+import { createContext, useContext, useState } from "react";
+export const postStructure = {
+    post_id: undefined,
     title: '',
     banner: '',
     conent: [],
@@ -8,13 +8,13 @@ const blogStructure = {
     content: '',
     isDraft: true,
     des: '',
-    author: null
+    author: undefined,
 }
 export const EditPageContext = createContext({});
 export function EditPageContextProvider({children}) {
-    const [editState, setEditState] = useState('Edit');
-    const [blog, setBlog] = useState(blogStructure);
-    return (<EditPageContext.Provider value={{editState, setEditState, blog, setBlog}}>
+    const [wholeQuery, setWholeQuery] = useState({})
+    const [post, setPost] = useState(postStructure);
+    return (<EditPageContext.Provider value={{wholeQuery, setWholeQuery, post, setPost}}>
         {children}
     </EditPageContext.Provider>)
 }

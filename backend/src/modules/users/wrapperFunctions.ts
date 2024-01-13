@@ -77,4 +77,15 @@ async function getName(req:Request, res: Response) {
         // console.log(e);
     }
 }
+async function getUser(id:String) {
+    try {
+        return {code: 400}
+        // const response = await db.queryPool('SELECT name FROM USERS WHERE id = $1', [Number(userId)]);
+        // if (response.rowCount === 0) {
+        //     return {code: 400}
+        // }
+    } catch(e) {
+        console.log(e);
+    }
+}
 export default {register, login, logout, profile, getName};

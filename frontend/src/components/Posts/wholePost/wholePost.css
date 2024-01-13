@@ -8,7 +8,7 @@
     object-fit: cover;
     object-position: center;
 }
-.wholePost-main h2 {
+.wholePost-main-title {
     padding: 0 30px;
     text-align: center;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -26,6 +26,22 @@
     font-size: 15px;
     justify-content: center;
 }
-.wholePost-main p {
+.wholePost-main-info p {
     padding: 0 40px;
+}
+
+.wholePost-body-markdown {
+    padding: 0 40px;
+    height: 100%;
+}
+.wholePost-body-markdown h1,
+.wholePost-body-markdown h2,
+.wholePost-body-markdown h3 {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 30px;
+    color: rgb(35, 15, 53);
+}
+
+.wholePost-body-markdown p {
+    font-size: 20px;
 }

@@ -20,7 +20,12 @@
     display: flex;
     gap: 5px;
 }
-.homeNavbar-body-container button{
+.homeNavbar-body-container input{
+    font-size: 16px;
+    padding: 0 10px;
+    width: 90px;
+}
+.homeNavbar-body-text{
     font-family:'Times New Roman', Times, serif;
     font-weight: bold; 
     background: none;

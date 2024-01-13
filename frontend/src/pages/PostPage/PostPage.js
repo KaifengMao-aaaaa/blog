@@ -3,66 +3,59 @@ import './postPage.css'
 import { useContext, useEffect, useState } from "react";
 import { makeRequest } from "../../utils/requestHelpers";
 import Loading from "../../components/Loading/Loading";
-import Markdown from 'react-markdown';
 import LinkIcon from '../../utils/imgs/linkIcon.png'
-import { UserContext } from "../../UserContext";
 import { GlobalLoadingContext } from "../../GlobalLoading";
-import { EditPage } from "../EditPage/EditPage";
 import SideBar from "../HomePage/SideBar";
 import WholePost from "../../components/Posts/wholePost/WholePost";
+import DisplayTag from "../../components/Tag/DisplayTag";
+import { UserContext } from "../../UserContext";
+import { getUrlToEditPage } from "../EditPage/EditPage";
 const PostPage = () => {
-    const {postId} = useParams();
+    const {post_id} = useParams();
     const [post, setPost] = useState(null);
-    const [username, setUsername] = useState('');
-    const {userInfo} = useContext(UserContext);
     const {globalLoading} = useContext(GlobalLoadingContext);
-    const [direct, setDirect] = useState('');
+    const {userInfo} = useContext(UserContext);
+    const navigate = useNavigate();
     useEffect(() => {
         
-        async function getOnePost(postId) {
-            let response = await makeRequest('GET', 'POST_GETONE', {postId},{'Content-Type': 'application/json'}, {credentials: 'include'})
+        async function getOnePost(post_id) {
+            let response = await makeRequest('GET', 'POST_GET', {post_id},{'Content-Type': 'application/json'}, {credentials: 'include'})
             if (!response.ok) {
                 return;
             }
             let result = await response.json();
-            setPost(result.post);
-
-            response = await makeRequest('GET', 'USER_GETNAME',{userId: result.post.author},{'Content-Type': 'application/json'}, {credentials: 'include'})
-            result = await response.json();
-            setUsername(result.username);
+            setPost(result.posts[0]);
         }
-        getOnePost(postId);
-    }, [])
-    if (!post || !username || !globalLoading.userContextLoading) {
+        getOnePost(post_id);
+    }, [post_id])
+    if (!post || !globalLoading.userContextLoading) {
         return <Loading/>
     }
-    function handleHomeButtonClick(e) {
-        setDirect('HOME');
+    function handleEditClick(e) {
+        makeRequest('PUT', 'POST_TODRAFT', {post_id},{'Content-Type': 'application/json'}, {credentials: 'include'})
+        localStorage.setItem('editState', 'Edit')
+        navigate(getUrlToEditPage('edit', post.post_id));
     }
-    function handleEditButtonClick(e) {
-        setDirect('EDIT')
+    function handleDeleteClick(e) {
+        makeRequest('DELETE', 'POST_DELETEONE', {post_id},{'Content-Type': 'application/json'}, {credentials: 'include'})
+        navigate(`/`);
     }
-    if (direct) {
-        if (direct === 'HOME') {
-            return <Navigate to={'/'}/>
-        } else if (direct === 'EDIT') {
-            return <Navigate to={`/edit/${post.id}`}/>
-        }
-    }
-    const date = new Date(post.publish_time);
     return (
     <div className="postPage-main">
         <div className="postPage-main-postArea">
-            <WholePost/>
+            {   post.author === userInfo.userId &&
+                <div className="postPage-main-top">
+                    <button onClick={handleEditClick}>Edit</button>
+                    <button onClick={handleDeleteClick}>Delete</button>
+                </div>
+            }
+            <WholePost post={post}/>
             <div className="postPage-main-postArea-tagsArea">
                 <p>Categorized in:</p>
                 <div>
-                    <p>asd</p>
-                    <p>asd</p>
-                    <p>asd</p>
-                    <p>asd</p>
-                    <p>asd</p>
-                    <p>asd</p>
+                    <div className='squarePost-body-bottom-tags'>
+                        {post.tags.map((tag, i) => <DisplayTag key={i} tag={tag}/>)}
+                    </div>
                 </div>
             </div>
             <div className="postPage-main-share">
@@ -76,25 +69,5 @@ const PostPage = () => {
         </div>
         <SideBar/>
     </div>)
-    // return (<div className={styles.body}>
-    //     <div className={styles.titleArea}>    
-    //         <img src="https://images.ctfassets.net/hrltx12pl8hq/vfJfws5pq5PK8xSX6I1bV/d542f5862da3701e2afe687e9efbeff6/hero-image-robot-.jpg?fit=fill&w=1200&h=675&fm=webp" className={styles.bannerArea}/>
-    //         <div className={styles.infoArea}>
-    //             <h1 className={styles.title}>{post.title}</h1>
-    //             <div>
-    //                 <p className={styles.author}>{username}</p>
-    //                 <time>{date.toLocaleTimeString()}{'  '}{date.toLocaleDateString()}</time>
-    //             </div>
-    //             <p className={styles.desc}>{post.des}</p>
-    //         </div>
-    //     </div>
-    //     <div className={styles.contentArea}>
-    //         <Markdown >{post.content}</Markdown>
-    //     </div>    
-    //     <div>
-    //         {userInfo.userId === post.author && <button className={styles.homeButton} onClick={handleEditButtonClick}>Edit</button>}
-    //         <button className={styles.homeButton} onClick={handleHomeButtonClick}>Home page</button>
-    //     </div>
-    // </div>)
 }
 export default PostPage;

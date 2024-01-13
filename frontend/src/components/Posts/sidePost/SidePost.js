@@ -1,15 +1,18 @@
 import './sidePost.css'
 import Img from '../homePost/config.png'
-const SidePost = () => {
-    return <div className='sidePost-body'>
-        <img src={Img}/>
-        <div className='sidePost-body-texts'>
-            <h3>it is header is not 2 line so l add need more so l have to add tow workds for more lines to show</h3>
-            <div>
-                <p>author</p>
-                <time>author</time>
+const SidePost = ({post, onClick}) => {
+    const date = new Date(post.publish_time);
+    return (
+        <label className='sidePost-body' onClick={onClick}>
+            <img src={Img} alt="Post"/>
+            <div className='sidePost-body-texts'>
+                <h3>{post.title}</h3>
+                <div>
+                    <time>{date.toLocaleDateString()}</time>
+                    <time>{date.toLocaleTimeString()}</time>
+                </div>
             </div>
-        </div>
-    </div>
+        </label>
+);
 }
 export default SidePost;

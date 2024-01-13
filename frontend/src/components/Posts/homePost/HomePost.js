@@ -1,6 +1,7 @@
 import './homePost.css'
 import profileImg from './config.png'
 import { useNavigate } from 'react-router-dom';
+import Tag from '../../Tag/Tag';
 const HomePost = ({post}) => {
     const navigate = useNavigate();
     const date = new Date(post.publish_time);
@@ -19,13 +20,13 @@ const HomePost = ({post}) => {
         </p>
         <div className='homePost-body-bottom'>
             <div className='homePost-body-bottom-tags'>
-                asdasd
+                    {post.tags.map((tag, i) => <Tag key={i} tag={tag}/>)}
             </div>
-            <p>
-               {post.author}
+            <p className='homePost-body-bottom-author'>
+               {post.author_name}
             </p>
         </div>
-        <button onClick={() => navigate(`/post/${post.post_id}`)}>Continue Reading</button>
+        <button className='homePost-body-read' onClick={() => navigate(`/post/${post.post_id}`)}>Continue Reading</button>
     </div>
 }
 export default HomePost;

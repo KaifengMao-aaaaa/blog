@@ -1,67 +1,51 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { UserContext } from "../../UserContext"
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Edit from "./Display/Edit";
-import styles from './Css/editPage.module.css'
 import Preview from "./Display/Preview";
 import Publish from "./Display/Publish";
 import { GlobalLoadingContext } from "../../GlobalLoading";
 import Loading from "../../components/Loading/Loading";
 import { makeRequest } from "../../utils/requestHelpers";
-import Draft from "./Display/Draft";
+import Main from "./Display/Main";
 import { defaultSolveException } from "../../utils/helpers";
 import { EditPageContext } from "../../layouts/EditPageContext";
-const blogStructure = {
-    id: null,
-    title: '',
-    banner: '',
-    conent: [],
-    tags: [],
-    content: '',
-    isDraft: true,
-    des: '',
-    author: null
-}
 export const EditContext = createContext({});
 export function EditPage() {
     const {userInfo} = useContext(UserContext);
     const {globalLoading, setGlobalLoading} = useContext(GlobalLoadingContext);
-    const {editState, setEditState, blog, setBlog} = useContext(EditPageContext)
-    // const [editState, setEditState] = useState('Edit');
-    // const [blog, setBlog] = useState(blogStructure);
-    const {postId} = useParams();
+    const {wholeQuery,setWholeQuery, post, setPost} = useContext(EditPageContext)
+    let {query} = useParams();
+    const navigate = useNavigate();
     useEffect(() => {
-        if (postId) {
-            localStorage.setItem('postId', postId);
+        const post_id = query.split('post_id=')[1]?.split('+')[0];
+        const editState = query.split('editState=')[1]?.split('+')[0];
+        if (post_id === undefined || editState === undefined) {
+            navigate('/');
         }
-        if (globalLoading.userContextLoading) {
-            window.addEventListener('beforeunload', handleBeforeUnload);
-            const postId = localStorage.getItem('postId')
-            if (postId) {
-                makeRequest('GET','POST_GETONE',  {postId: localStorage.getItem('postId')}, {'Content-Type': 'application/json'}, {credentials: 'include'})
+        setWholeQuery({
+            editState, post_id
+        })
+        
+        async function getPost(post_id) {
+            if (localStorage.getItem('post')) {
+                setPost(JSON.parse(localStorage.getItem('post')))
+            } else if (post_id) {
+                await makeRequest('GET','POST_GET',  {post_id, number: 1, offset: 0}, {'Content-Type': 'application/json'}, {credentials: 'include'})
                     .then(response => {
                         if (response.ok) {
-                            response.json().then(result => setBlog(result.post))
+                            response.json().then(result => result.posts.length !== 0 ? setPost(result.posts[0]) : '')
                         } else {
                             defaultSolveException(response);
                         }
                     })
             }
-            if (localStorage.getItem('editState')) {
-                setEditState(localStorage.getItem('editState'));
-                localStorage.removeItem('editState');
-            }
-            setBlog({...blog, author: userInfo.userId});    
+        }
+        if (globalLoading.userContextLoading) {
+            getPost(post_id);
             setGlobalLoading({...globalLoading, editContextLoading: true});
         };
-        return () => {
-            localStorage.removeItem('postId');
-            localStorage.removeItem('editState')
-        }
-    }, [globalLoading.userContextLoading, editState])
-    const handleBeforeUnload = (event) => {
-        localStorage.setItem('editState', editState);
-    };
+    }, [globalLoading.userContextLoading, query])
     if (!globalLoading.userContextLoading) {
         return (<Loading/>)
     }
@@ -69,20 +53,19 @@ export function EditPage() {
         return (<Navigate to = "/login"/>)
     }
     return (
-        // <EditContext.Provider value={{blog, setBlog, editState, setEditState}}>
         <div >
             <div  id="EditPage-Container">
-                {/* <Edit/> */}
-                {/* <Preview/> */}
                 <div >
-                    {editState === 'Preview' && (<Preview/>)}
-                    {editState === 'Edit' && (<Edit/>)}
-                    {editState === 'Publish' && <Publish/>}
-                    {/* {editState === 'Edit' && <div className={styles.BothContainer}><Preview/><div className={styles.divider} id="EditPage-divided"></div><Edit/></div>} */}
-                    {/* {editState === 'DraftList' && <Draft/>} */}
+                    {wholeQuery.editState === 'main' && <Main/>}
+                    {wholeQuery.editState === 'preview' && (<Preview/>)}
+                    {wholeQuery.editState === 'edit' && (<Edit/>)}
+                    {wholeQuery.editState === 'publish' && <Publish/>}
                 </div>
             </div>
         </div>
-        // </EditContext.Provider>
     )
+}
+
+export function getUrlToEditPage(editState, post_id) {
+    return `/edit/editState=${editState}+post_id=${post_id}`;
 }

@@ -6,6 +6,7 @@ import authorization from './authorization';
 import cookieParser from 'cookie-parser';
 import {PORT} from '../backend_config';
 import cors from 'cors';
+import graphql from './graphql_index';
 const app: Express = express()
 // parse json body of request 
 app.use(express.json());
@@ -13,7 +14,10 @@ app.use(express.json());
 app.use(cookieParser());
 // Make hosts from other network could access these API
 app.use(cors({credentials: true, origin:'http://localhost:3000'}));
-
+app.get('/', (req, res) => {
+    res.json('hii')
+})
+app.use('/api/graphql', graphql);
 // public routers
 app.use('/api/user', publicUserModule);
 

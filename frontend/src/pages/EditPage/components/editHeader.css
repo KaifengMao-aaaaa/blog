@@ -29,3 +29,6 @@
     display: flex;
     align-items: center;
 }
+.editHeader-navbar-item-contanier img {
+    width: 20px;
+}

@@ -23,3 +23,26 @@ Create Table have_tag (
     name Text not null,
     primary key (name, post_id)
 );
+CREATE OR REPLACE VIEW getTags AS 
+    SELECT STRING_AGG(name, ',') as tags, post_id
+    FROM have_tag GROUP BY post_id;
+CREATE OR REPLACE VIEW getPosts AS 
+    SELECT p.id as post_id, title, banner, content, des, author, is_draft, publish_time, tags, name as author_name FROM posts p LEFT JOIN getTags g ON g.post_id = p.Id LEFT JOIN users u ON u.id = p.author; 
+CREATE OR REPLACE FUNCTION getPostsWithPattern(pattern TEXT) 
+RETURNS SETOF getPosts AS 
+$$
+BEGIN 
+    RETURN QUERY
+    SELECT * FROM getPosts g
+    WHERE g.title ~* pattern;
+END;
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION getPostsWithTag(tagPattern TEXT) 
+RETURNS SETOF getPosts AS 
+$$
+BEGIN 
+    RETURN QUERY
+    SELECT * FROM getPosts g
+    WHERE g.tags ~* tagPattern;
+END;
+$$ LANGUAGE plpgsql;

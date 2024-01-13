@@ -1,12 +1,13 @@
 import { useState } from "react"
 import {makeRequest} from '../../utils/requestHelpers'
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import './registerPage.css';
 import AnimationWrapper from "../../components/Animation/AnimationWrapper";
 export default function RegisterPage() {
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
     const [redirect, setRedirect] = useState(false);
+    const navigate = useNavigate();
     const register = async (e) => {
         e.preventDefault();
         const response = await makeRequest('POST','USER_REGISTER', {username, password}, {'Content-Type': 'application/json'},{credentials: 'include'});
@@ -34,6 +35,7 @@ export default function RegisterPage() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}/>
                 <button>Register</button>
+                <button className="registerPage-login" onClick={() => navigate('/login')}>Have account?</button>
             </form>
         </AnimationWrapper>
     )

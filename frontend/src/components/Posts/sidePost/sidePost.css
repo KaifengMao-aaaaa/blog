@@ -1,6 +1,6 @@
 .sidePost-body {
     width: auto;
-    height: 300px;
+    height: 6em;
     display: grid;
     grid-template-columns: 60px 1fr;
     gap: 10px;
@@ -23,10 +23,6 @@
     display: grid;
     grid-template-columns: 0.5fr 0.5fr;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-.sidePost-body-texts p{
-    margin: 0;
-    overflow: hidden;
 }
 .sidePost-body-texts time{
     margin: 0;

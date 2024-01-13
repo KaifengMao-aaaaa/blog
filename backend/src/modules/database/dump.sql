@@ -21,18 +21,6 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: get_token; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.get_token (
-    user_id integer NOT NULL,
-    token text NOT NULL
-);
-
-
-ALTER TABLE public.get_token OWNER TO postgres;
-
---
 -- Name: have_tag; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -43,6 +31,19 @@ CREATE TABLE public.have_tag (
 
 
 ALTER TABLE public.have_tag OWNER TO postgres;
+
+--
+-- Name: gettags; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW public.gettags AS
+ SELECT string_agg(have_tag.name, ','::text) AS tags,
+    have_tag.post_id
+   FROM public.have_tag
+  GROUP BY have_tag.post_id;
+
+
+ALTER TABLE public.gettags OWNER TO postgres;
 
 --
 -- Name: posts; Type: TABLE; Schema: public; Owner: postgres
@@ -76,6 +77,57 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
+-- Name: getposts; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW public.getposts AS
+ SELECT p.id AS post_id,
+    p.title,
+    p.banner,
+    p.content,
+    p.des,
+    p.author,
+    p.is_draft,
+    p.publish_time,
+    g.tags,
+    u.name AS author_name
+   FROM ((public.posts p
+     LEFT JOIN public.gettags g ON ((g.post_id = p.id)))
+     LEFT JOIN public.users u ON ((u.id = p.author)));
+
+
+ALTER TABLE public.getposts OWNER TO postgres;
+
+--
+-- Name: getpostswithpattern(text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.getpostswithpattern(pattern text) RETURNS SETOF public.getposts
+    LANGUAGE plpgsql
+    AS $$
+BEGIN 
+    RETURN QUERY
+    SELECT * FROM getPosts g
+    WHERE g.title ~* pattern;
+END;
+$$;
+
+
+ALTER FUNCTION public.getpostswithpattern(pattern text) OWNER TO postgres;
+
+--
+-- Name: get_token; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.get_token (
+    user_id integer NOT NULL,
+    token text NOT NULL
+);
+
+
+ALTER TABLE public.get_token OWNER TO postgres;
+
+--
 -- Data for Name: get_token; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -88,6 +140,7 @@ COPY public.get_token (user_id, token) FROM stdin;
 --
 
 COPY public.have_tag (post_id, name) FROM stdin;
+490612991	asd
 \.
 
 
@@ -96,6 +149,8 @@ COPY public.have_tag (post_id, name) FROM stdin;
 --
 
 COPY public.posts (id, title, banner, content, des, author, is_draft, publish_time) FROM stdin;
+490612991	asb		asdas	asd	737358175	f	2024-01-12 22:28:04.848168
+577324045	bbbac				737358175	f	2024-01-12 23:59:51.911749
 \.
 
 
@@ -104,6 +159,7 @@ COPY public.posts (id, title, banner, content, des, author, is_draft, publish_ti
 --
 
 COPY public.users (id, name, password) FROM stdin;
+737358175	kf	123
 \.
 
 

@@ -20,18 +20,19 @@ function App() {
       <UserProvider>
         <Routes>
           <Route path='/edit' element={<EditPageLayout/>}>
-            <Route path={'/edit/:postId'} element={<ProtectedRouter element={<EditPage/>}/>}/>
+            <Route path={'/edit/:query'} element={<ProtectedRouter element={<EditPage/>}/>}/>
             <Route path={'/edit'} element={<ProtectedRouter element={<EditPage/>}/>}/>
           </Route>
           <Route path='/' element={<HomePageLayout/>}>
             <Route index element={<ProtectedRouter element={<HomePage/>}/>}/>
+            <Route path='search/:query' element={<ProtectedRouter element={<HomePage/>}/>}/>
           </Route>
           <Route path='/' element={<LoginPageLayout/>}>
             <Route path='register' element={<RegisterPage/>}/>
             <Route path='login' element={<LoginPage/>}/>
           </Route>
           <Route path='/post' element={<PostPageLayout/>}>
-            <Route path=':postId' element={<ProtectedRouter element={<PostPage/>}/>}/>
+            <Route path=':post_id' element={<ProtectedRouter element={<PostPage/>}/>}/>
           </Route>
           <Route path='/profile' element={<ProfilePageLayout/>}>
             <Route index element={<ProtectedRouter element={<ProfilePage/>}/>}/>

@@ -55,10 +55,12 @@
     grid-template-columns: 1fr 0.3fr;
 }
 .homePost-body-bottom-tags {
-    overflow: hidden;
-    display: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    overflow: auto;
 }
-.homePost-body-bottom p {
+.homePost-body-bottom-author {
     display: 100%;
     margin: 0;
     display: flex;
@@ -68,7 +70,7 @@
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     align-items: center;
 }
-.homePost-body button {
+.homePost-body-read {
     background-color: #38386e;
     color: whitesmoke;
     font-size: 15px;
