@@ -17,7 +17,7 @@ async function publish(req: Request, res: Response) {
         }
         res.json({postId});
     } catch (e) {
-        console.log('error');
+        res.json('Unknown error').status(400);
     }
 }
 async function toDraft(req: Request, res: Response) {
@@ -26,7 +26,7 @@ async function toDraft(req: Request, res: Response) {
         db.queryPool('UPDATE posts SET is_draft = true WHERE id = $1', [post_id]);
         res.json({});
     } catch (e) {
-        console.log('error');
+        res.json('Unknown error').status(400);
     }
 }
 async function get(req: Request, res: Response) {
@@ -73,7 +73,7 @@ async function get(req: Request, res: Response) {
         }
         res.json({posts:posts.rows})
     } catch(e) {
-        console.log(e);
+        res.json('Unknown error').status(400);
     }
 }
 
@@ -83,7 +83,7 @@ async function deleteOne(req: Request, res: Response) {
         await db.queryPool(dbQuery.REMOVE_POST, [Number(post_id)]);
         res.json({});
     } catch(e) {
-        console.log(e)
+        res.json('Unknown error').status(400);
     }
 }
 

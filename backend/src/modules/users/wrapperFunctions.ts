@@ -40,13 +40,14 @@ async function login(req: Request, res: Response) {
         }
     } catch(e) {
         console.log(e);
+        res.json('Unknown error').status(400);
     }
 }
 async function logout(req:Request, res: Response) {
     try {
         res.cookie('token', '').send('ok').status(200);
     } catch(e) {
-        console.log(e);
+        res.json('Unknown error').status(400);
     }
 }
 async function profile(req:Request, res: Response) {
@@ -57,7 +58,7 @@ async function profile(req:Request, res: Response) {
             res.json(info);
         })
     } catch(e) {
-        
+        res.json('Unknown error').status(400);
     }
 }
 
