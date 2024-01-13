@@ -44,10 +44,7 @@ async function login(req: Request, res: Response) {
 }
 async function logout(req:Request, res: Response) {
     try {
-        // const {token, username} = req.body;
-        // await db.queryPool(SQL_query.REMOVE_TOKEN, [username, token]);
-        res.cookie('token', '').send('ok');
-        // res.status(200).send('OK');
+        res.cookie('token', '').send('ok').status(200);
     } catch(e) {
         console.log(e);
     }
