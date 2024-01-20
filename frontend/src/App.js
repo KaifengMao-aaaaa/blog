@@ -14,7 +14,6 @@ import PostPageLayout from './layouts/PostPageLayout';
 import ProfilePageLayout from './layouts/ProfilePageLayout';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import EditPageLayout from './layouts/EditPageLayout';
-import CategoryPage from "./pages/CategoryPage/CategoryPage";
 function App() {
   return (
     <GlobalLoadingProvider>
@@ -25,10 +24,10 @@ function App() {
             <Route path={'/edit'} element={<ProtectedRouter element={<EditPage/>}/>}/>
           </Route>
           <Route path='/' element={<HomePageLayout/>}>
-            {/* <Route index element={<HomePage/>}/> */}
-            <Route path="/:page" element={<HomePage/>}/>
-            <Route path='search/:query' element={<HomePage/>}/>
-            <Route path='category/:category' element={<CategoryPage/>}/>
+            <Route index element={<HomePage/>}/>
+            <Route path="/home/:page" element={<HomePage/>}/>
+            <Route path='search/:query/:page' element={<HomePage/>}/>
+            <Route path='category/:category/:page' element={<HomePage/>}/>
           </Route>
           <Route path='/' element={<LoginPageLayout/>}>
             <Route path='register' element={<RegisterPage/>}/>

@@ -56,9 +56,9 @@ export default function Header() {
   function handleKeyDownSearch(e) {
     if (e.key === 'Enter') {
       if (pattern === '') {
-        navigate('/');
+        navigate('/home/1');
       } else {
-        navigate(`/search/${pattern}`)
+        navigate(`/search/${pattern}/1`)
       }
     }
   }
@@ -73,7 +73,7 @@ export default function Header() {
         navigate('/profile')
         return;
       case 'logo':
-        navigate('/1');
+        navigate('/home/1');
         break;
       case 'newPost':
         let url;
@@ -81,7 +81,7 @@ export default function Header() {
         navigate(url);
         break;
       case 'category':
-        navigate(`/category/${tmp.split('-')[1]}`); 
+        navigate(`/category/${tmp.split('-')[1]}/1`); 
         return;
     }
   }

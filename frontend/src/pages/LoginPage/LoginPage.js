@@ -19,7 +19,7 @@ export default function LoginPage() {
                 setUserInfo(userInfo);
                 localStorage.setItem('username', userInfo.username);
             })
-            navigate('/1');
+            navigate('/home/1');
             setGlobalLoading({...globalLoading, userContextLoading: true});
         } else if (response.status !== 500) {
             setIsError(true);
@@ -31,7 +31,7 @@ export default function LoginPage() {
     return (
         <AnimationWrapper>
                 <form className="container-18-2-4 grid-1-5-1 gap-1 pos-rel">
-                    <button onClick={() => navigate('/1')} className="pos-abs pos-r-2-1 btn h-2-2 font-light w-8-1 font-2 crs prim-hover-ltr">Back To Home</button>
+                    <button onClick={() => navigate('/home/1')} className="pos-abs pos-r-2-1 btn h-2-2 font-light w-8-1 font-2 crs prim-hover-ltr">Back To Home</button>
                     <div className="display blk-ctr flex font-t font-6">
                         <h1>Login</h1>
                     </div>

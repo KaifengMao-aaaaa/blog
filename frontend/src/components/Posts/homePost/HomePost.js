@@ -1,16 +1,17 @@
-import profileImg from './config.png'
 import profileIconImg from '../../../utils/imgs/profile.png'
 import timeSpanImg from '../../../utils/imgs/timeSpan.png'
 import { useNavigate } from 'react-router-dom';
+import { hostIP } from '../../../frontend.config';
 const HomePost = ({post, isPreview}) => {
     const navigate = useNavigate();
     const date = new Date(post.publish_time);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = date.toLocaleDateString('en-US', options);
+    let url = `http://${hostIP}/api/post/uploads/banner-${post.post_id}.png`
     return (
         <div className='container-16-23-3 grid-4-7 gap-2 hid'>
             <div className='container-12-5 rd-1 hid pos-rel'>
-                <img className='full-w full-h img-ctr' src={profileImg}/>
+                <img className='full-w full-h img-ctr' src={url} onError={(e) => e.target.src = `http://${hostIP}/api/post/uploads/banner-default.png`}/>
                 <p onClick={() => navigate(`/category/${post.category}`)}  className='pos-tl font-light bg-green pd-2-5 rd-1 font-b crs'>{post.category}</p>
             </div>
             <div className='grid-1-3 gap-1'>

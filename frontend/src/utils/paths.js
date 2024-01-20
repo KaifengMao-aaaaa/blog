@@ -15,6 +15,8 @@ const PATHS = {
     'POST_TODRAFT': '/api/post/toDraft',
     'POST_CREATECATEGORY': '/api/post/createCategory',
     'POST_LISTCATEGORIES': '/api/post/listCategories',
-    'POST_BANNERUPLOAD': '/api/post/upload'
+    'POST_BANNERUPLOAD': '/api/post/upload',
+    'POST_PUBLICINFO': '/api/post/publicInfo'
+
 }
 export default PATHS;

@@ -131,6 +131,14 @@ async function listCategories(req: Request, res: Response) {
     }
 }
 async function upload(req:Request, res:Response) {
-    res.send('correct to upload')
+    res.send('Correct to upload')
 }
-export default {publish, get, deleteOne, toDraft, createCategory, listCategories, upload};
+async function publicPostsInfo(req: Request, res: Response) {
+    try {
+        const response = await db.queryPool('SELECT count(*) as postsnum From posts WHERE is_draft = false', []);
+        res.json({postsNum: response.rows[0].postsnum});
+    } catch(e) {
+        res.send('Error happened');
+    }
+}
+export default {publish, get, deleteOne, toDraft, createCategory, listCategories, upload, publicPostsInfo};

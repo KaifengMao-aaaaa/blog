@@ -16,6 +16,21 @@ function EditHeader() {
     const navigate = useNavigate();
     function handleSaveDraft(e) {
         makeRequest('POST', 'POST_PUBLISH', {post:{...post, is_draft: true, author: userInfo.userId}}, {'Content-Type': 'application/json'}, {credentials:'include'})
+            .then((response) => {
+                if (response.ok) {
+                    localStorage.removeItem('post')
+                    response.json().then(data => {
+                        const formData = new FormData();
+                        formData.append('banner', post.banner);
+                        fetch(`/api/post/upload?post_id=${data.postId}`, 
+                            { 
+                                method: 'POST',
+                                body: formData,
+                            }
+                        )
+                    })
+                } 
+            })
         alert('Save sucessfully')
         localStorage.removeItem('post')
     }
@@ -24,7 +39,7 @@ function EditHeader() {
     }
     return (
         <nav className='container-full-7 flex flex-be bg-black pd-0-9 blk-ctr-h'>
-            <button className='crs' onClick={() => navigate('/1')}>
+            <button className='crs' onClick={() => navigate('/home/1')}>
                 <Logo fontSize={25} color={'white'}/>
             </button>
             <div className='flex blk-ctr-h gap-3'>
@@ -36,7 +51,7 @@ function EditHeader() {
                 {wholeQuery.editState !== 'main' && <div>
                     <button className='font-light crs' onClick={handleSaveDraft}>Save</button>
                 </div>}
-                {wholeQuery.editState !== 'edit' &&<div className="editHeader-navbar-item-contanier">
+                {wholeQuery.editState !== 'edit' &&<div >
                     <button className='font-light crs' onClick={() => navigate(`/edit/editState=edit+post_id=${wholeQuery.post_id}`)}>Edit</button>
                     <img className='icon-cont-xsm'src={editImg}/>
                 </div>}

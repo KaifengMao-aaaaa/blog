@@ -37,15 +37,11 @@ export function EditPage() {
         return (<Navigate to = "/login"/>)
     }
     return (
-        <div >
-            <div  id="EditPage-Container">
-                <div >
-                    {isOpenDrafts && <Drafts/>}
-                    {wholeQuery.editState === 'preview' && (<Preview/>)}
-                    {wholeQuery.editState === 'edit' && (<Edit/>)}
-                    {wholeQuery.editState === 'publish' && <Publish/>}
-                </div>
-            </div>
+        <div className="w-full">
+            {isOpenDrafts && <Drafts/>}
+            {wholeQuery.editState === 'preview' && (<Preview/>)}
+            {wholeQuery.editState === 'edit' && (<Edit/>)}
+            {wholeQuery.editState === 'publish' && <Publish/>}
         </div>
     )
 }

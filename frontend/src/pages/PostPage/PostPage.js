@@ -49,11 +49,11 @@ const PostPage = () => {
         }
 
     }
-    const url = `http://${hostIP}/api/post/uploads/banner-${post.post_id}.png`
+    let url = `http://${hostIP}/api/post/uploads/banner-${post.post_id}.png`
     return (
-        <div>
+        <div className="mr-bottom-20">
             <section className="container-full-1"></section>
-            <img className="full-w" src={url}/>
+            <img className="full-w" src={url} onError={(e) => e.target.src = `http://${hostIP}/api/post/uploads/banner-default.png`}/>
             <div className="grid-h-5-2 mr-top-12">
                 <Post post={post} isPreview={false}/>
                 <div className="flex blk-ctr-l">
