@@ -1,10 +1,9 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { GlobalLoadingContext } from '../../../GlobalLoading';
 import Loading from '../../../components/Loading/Loading';
 import fullImg from '../../../utils/imgs/full.png';
 import MonacoEditor from 'react-monaco-editor';
 import upload from '../../../utils/imgs/upload.png'
-import Markdown from 'react-markdown';
 import { EditPageContext } from "../../../layouts/EditPageContext";
 import { useNavigate } from "react-router-dom";
 import Post from "../../../components/Post/Post";

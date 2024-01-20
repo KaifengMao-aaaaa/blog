@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { makeRequest } from '../../../utils/requestHelpers';
 import { EditPageContext } from '../../../layouts/EditPageContext';
 import { useNavigate } from 'react-router-dom';
 import { getUrlToEditPage } from '../EditPage';

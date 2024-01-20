@@ -1,4 +1,3 @@
-import './homePost.css'
 import profileImg from './config.png'
 import profileIconImg from '../../../utils/imgs/profile.png'
 import timeSpanImg from '../../../utils/imgs/timeSpan.png'

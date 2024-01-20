@@ -1,6 +1,4 @@
 import closeIcon from './close.png';
-import { useContext } from 'react';
-import { EditPageContext } from '../../layouts/EditPageContext';
 function Tag({tag, isEdit, onDelete}) {
     const styles = {
         edit: 'bg-white pd-1-5 font-2 flex blk-ctr container-auto-5 rd-1 blk-ctr-h',
