@@ -1,11 +1,11 @@
 import { useState } from "react"
 import {makeRequest} from '../../utils/requestHelpers'
 import { Navigate, useNavigate } from "react-router-dom";
-import './registerPage.css';
 import AnimationWrapper from "../../components/Animation/AnimationWrapper";
 export default function RegisterPage() {
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
+    const [isError, setIsError] = useState(false)
     const [redirect, setRedirect] = useState(false);
     const navigate = useNavigate();
     const register = async (e) => {
@@ -13,8 +13,11 @@ export default function RegisterPage() {
         const response = await makeRequest('POST','USER_REGISTER', {username, password}, {'Content-Type': 'application/json'},{credentials: 'include'});
         if (response.ok) {
             setRedirect(true);
-        } else {
-            alert('Failed to register');
+        } else if (response.status !== 500) {
+            setIsError(true);
+            setTimeout(() => {
+                setIsError(false);
+            }, 3000);
         }
     }
     if (redirect) {
@@ -22,21 +25,38 @@ export default function RegisterPage() {
     }
     return (
         <AnimationWrapper>
-            <form className="register" onSubmit={register}>
-                <h1>Register</h1>
-                <input 
-                    type="text" 
-                    placeholder="userName" 
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}/>
-                <input 
-                    type='password' 
-                    placeholder="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}/>
-                <button>Register</button>
-                <button className="registerPage-login" onClick={() => navigate('/login')}>Have account?</button>
-            </form>
+                <form className="container-18-2-4 grid-1-5-1 gap-1">
+                    <div className="font-5 font-t display blk-ctr flex">
+                        <h1>Register</h1>
+                    </div>
+                    <div>
+                        <div className="grid-5 ">
+                            <div className="blk-ctr flex">
+                                <input 
+                                    className="in-fl in in-rd h-3-2 bg-grey"
+                                    type="text"  
+                                    placeholder="username"
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    value={username}
+                                />
+                            </div>
+                            <div className="blk-ctr flex">
+                                <input 
+                                    className="in-fl in in-rd h-3-2 bg-grey"
+                                    type='password' 
+                                    placeholder="password"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                /> 
+                            </div>
+                        </div>
+                        <div className="flex-col gap-1 flex blk-ctr-h">
+                            {isError && <p className="font-2 font-warm font-b">Username existed</p>}
+                            <button className='btn btn-fl btn-rd prim-hover-sdw crs font-3 font-light font-b'onClick={register}>Register</button> 
+                            <p className='tet-ctr crs' onClick={() => navigate('/login')}>Have account?</p>
+                        </div>
+                    </div>
+                </form>
         </AnimationWrapper>
     )
 }

@@ -1,0 +1,15 @@
+@for $gap from 1 through 6 {
+    .gap-#{$gap} {
+        gap: #{$gap * 0.5}rem;
+    }
+}
+@for $gap from 1 through 6 {
+    .gap-col-#{$gap} {
+        column-gap: #{$gap * 0.5}rem;
+    }
+}
+@for $gap from 1 through 6 {
+    .gap-row-#{$gap} {
+        row-gap: #{$gap * 0.5}rem;
+    }
+}

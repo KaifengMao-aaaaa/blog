@@ -12,6 +12,9 @@ const PATHS = {
     'POST_DELETEONE': '/api/post/deleteOne',
     'POST_GETBYAUTHOR': '/api/post/getByAuthor',
     'POST_GETBYTAG': '/api/post/getByTag',
-    'POST_TODRAFT': '/api/post/toDraft'
+    'POST_TODRAFT': '/api/post/toDraft',
+    'POST_CREATECATEGORY': '/api/post/createCategory',
+    'POST_LISTCATEGORIES': '/api/post/listCategories',
+    'POST_BANNERUPLOAD': '/api/post/upload'
 }
 export default PATHS;

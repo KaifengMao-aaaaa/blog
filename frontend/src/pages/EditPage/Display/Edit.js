@@ -1,34 +1,29 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { UserContext } from '../../../UserContext';
 import { GlobalLoadingContext } from '../../../GlobalLoading';
 import Loading from '../../../components/Loading/Loading';
 import fullImg from '../../../utils/imgs/full.png';
 import MonacoEditor from 'react-monaco-editor';
 import upload from '../../../utils/imgs/upload.png'
-import './edit.css'
 import Markdown from 'react-markdown';
 import { EditPageContext } from "../../../layouts/EditPageContext";
 import { useNavigate } from "react-router-dom";
+import Post from "../../../components/Post/Post";
 const Edit = () => {
     const {post, setPost} = useContext(EditPageContext);
     const {globalLoading} = useContext(GlobalLoadingContext)
     const fileInputRef = useRef();
     const navigate = useNavigate();
-    useEffect(() => {
-        const interval = setInterval(saveDraft, 5000);
-        return () => clearInterval(interval);
-    }, [post])
+
     function handleUpload(e) {
         e.preventDefault()
         const img = e.target.files[0];
-        if (img) {
-            const url = URL.createObjectURL(img);
-            setPost({...post, banner: url});
+        if (img.type.match('image')) {
+            // const url = URL.createObjectURL(img);
+            setPost({...post, banner: img});
+
         }
     }
-    function saveDraft() {
-        localStorage.setItem('post', JSON.stringify(post))
-    }
+
     function handleContentChange(newValue, e) {
         setPost(prevPost => {
             return {...prevPost, content: newValue};
@@ -58,47 +53,48 @@ const Edit = () => {
         automaticLayout: false,
     };
     return (
-        <div className='editDisplay-main'>
-            <div className='editDisplay-main-titleArea'>
-                <p className='editDisplay-main-title-top'>TITLE</p>
-                <input className="editDisplay-main-title" placeholder={'Add Title'} value={post.title} onChange={handleTitleChange}/>
+        <div className="container-full-auto">
+            <div className="container-full-9 grid-1-2  pd-2-9">
+                <div>
+                    <p className='font-2 font-b'>TITLE</p>
+                </div>
+                <div>
+                    <input className="font-4 font-w-6 font-t" placeholder={'Add Title'} value={post.title} onChange={handleTitleChange}/>
+                </div>
             </div>
-
-            <div className='editDisplay-body'>
-                <div className='editDisplay-body-source'>
-                    <div className='editDisplay-body-source-head'>
-                        <h3>MARKDOWN</h3>
-                    </div>
-                    <div className='editDisplay-body-source-lines'>
-                        <MonacoEditor
-                            width="auto"
-                            height="560px"
-                            language="markdown"
-                            theme="vs-light"
-                            value={post.content}
-                            options={editorOptions}
-                            onChange={handleContentChange}
+            <div className="container-full-5 bdr-solid-1 bdr-thin bdr-dark-light grid-h-1-1 blk-ctr-h">
+                <div className="pd-0-9">
+                    <p className="font-2 font-t">MARKDOWN</p>
+                </div>
+                <div className="flex flex-h flex-be">
+                    <p className="font-2 font-t">PREVIEW</p>
+                    <div className="flex gap-2 pd-right-5 blk-ctr-h">
+                        <img className='icon-cont-xsm' src={upload} onClick={() => fileInputRef.current.click()}/>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{display:"none"}}
+                            onChange={handleUpload}
+                            accept=".pdf, .jpg, .jpeg"
                         />
+                        <img className="icon-cont-xsm" onClick={handleFullPreview} src={fullImg}/>
                     </div>
                 </div>
-                <div className='editDisplay-body-preview'>
-                    <div className='editDisplay-body-preview-head'>
-                        <h3>PREVIEW</h3>
-                        <div className="editDisplay-body-preview-icons">
-                            <img src={upload} onClick={() => fileInputRef.current.click()}/>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                style={{display:"none"}}
-                                onChange={handleUpload}
-                                accept=".pdf, .jpg, .jpeg"
-                            />
-                            <img onClick={handleFullPreview} src={fullImg}/>
-                        </div>
-                    </div>
-                    <div className='editDisplay-body-preview-markdown'>
-                        <Markdown children={post.content}/>
-                    </div>
+            </div>
+            <div className="grid-h-1-1">
+                <div className="bg-black">
+                    <MonacoEditor
+                        width="auto"
+                        height="560px"
+                        language="markdown"
+                        theme="vs-light"
+                        value={post.content}
+                        options={editorOptions}
+                        onChange={handleContentChange}
+                    />
+                </div>
+                <div className="h-10-7 auto">
+                    <Post post={post} isPreview={true}/>
                 </div>
             </div>
         </div>

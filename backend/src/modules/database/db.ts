@@ -29,4 +29,10 @@ async function queryPool(query: string, values: (string|number)[]) {
     }
     return await pool.query(query, values);
 }
-export default {queryPool, closePool};
+async function query(query: string) {
+    if (!pool) {
+        pool = createpool();
+    }
+    await pool?.query(query);
+}
+export default {queryPool, closePool, query};

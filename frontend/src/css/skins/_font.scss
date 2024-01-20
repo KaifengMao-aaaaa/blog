@@ -1,0 +1,31 @@
+@for $i from 1 through 10 {
+    .font-#{$i} {
+        font-size: #{$i * 0.5}rem;
+    }
+}
+.font-light {
+    color: aliceblue;
+}
+.font-dark {
+    color: $background;
+}
+.font-dark-dark {
+    color: darken($background, 10%);
+}
+.font-black {
+    color: black;
+}
+@for $i from 1 through 10 {
+    .font-w-#{$i} {
+        font-weight: #{$i * 100};
+    }
+}
+
+@for $i from 1 through 10 {
+    .font-h-#{$i} {
+        line-height: #{$i * 0.2}rem;
+    }
+}
+.font-warm {
+    color: $error;
+}

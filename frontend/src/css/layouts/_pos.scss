@@ -1,0 +1,70 @@
+.pos-abs {
+    position: absolute;
+}
+.pos-rel {
+    position: relative;
+}
+
+.pos-tl {
+    position: absolute;
+    top:0.8rem;
+    left: 0.8rem
+}
+.pos-br {
+    position: absolute;
+    right:0.8rem;
+    bottom: 0.8rem
+}
+.pos-bl {
+    position: absolute;
+    left:0.8rem;
+    bottom: 0.8rem
+}
+.pos-tr {
+    position: absolute;
+    top:0.8rem;
+    right: 0.8rem
+}
+.pos-t-full {
+    top: 100%;
+}
+.pos-t-0 {
+    top: 0;
+}
+.pos-b-full {
+    bottom: 100%;
+}
+.pos-b-0 {
+    bottom: 0;
+}
+.pos-l-half {
+    left: 50%;
+}
+@for $i from 0 through 20 {
+    @for $factor from 0 through 10 {
+        .pos-l-#{$i}-#{$factor} {
+            left: #{$i * $factor * 0.5}rem;
+        }
+    }
+}
+@for $i from 0 through 20 {
+    @for $factor from 0 through 10 {
+        .pos-r-#{$i}-#{$factor} {
+            right: #{$i * $factor * 0.5}rem;
+        }
+    }
+}
+@for $i from 1 through 20 {
+    @for $factor from 1 through 10 {
+        .pos-t-#{$i}-#{$factor} {
+            top: #{$i * $factor * 0.5}rem;
+        }
+    }
+}
+@for $i from 1 through 20 {
+    @for $factor from 1 through 10 {
+        .pos-b-#{$i}-#{$factor} {
+            bottom: #{$i * $factor * 0.5}rem;
+        }
+    }
+}

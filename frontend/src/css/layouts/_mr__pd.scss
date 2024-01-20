@@ -1,0 +1,38 @@
+@each $dir in $direction {
+    @for $i from 1 through 20 {
+        .pd-#{$dir}-#{$i} {
+            padding-#{$dir}: #{$i * 0.2}rem;
+        }
+    }
+}
+@each $dir in $direction {
+    @for $i from 1 through 20 {
+        .mr-#{$dir}-#{$i} {
+            margin-#{$dir}: #{$i * 0.2}rem;
+        }
+    }
+}
+@for $i from 0 through 20 {
+    @for $j from 0 through 20 {
+        .pd-#{$i}-#{$j} {
+            padding: #{$i * 0.2}rem #{$j * 0.2}rem;
+        }
+    }
+}
+@for $i from 0 through 20 {
+    @for $j from 0 through 20 {
+        .mr-#{$i}-#{$j} {
+            margin: #{$i * 0.2}rem #{$j * 0.2}rem;
+        }
+    }
+}
+@for $i from 1 through 20 {
+    .pd-#{$i} {
+        padding: #{$i * 0.2}rem;
+    }
+}
+@for $i from 1 through 20 {
+    .mr-#{$i} {
+        margin: #{$i * 0.2}rem;
+    }
+}

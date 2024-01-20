@@ -1,0 +1,50 @@
+
+@for $i from 1 through 10 {
+    @for $j from 1 through 10 {
+        .grid-#{$i}-#{$j} {
+            display: grid;
+            grid-template-rows: #{$i}fr #{$j}fr;
+            height: 100%;
+        }
+    }
+}
+@for $i from 1 through 10 {
+    @for $j from 1 through 10 {
+        .grid-h-#{$i}-#{$j} {
+            display: grid;
+            grid-template-columns: #{$i}fr #{$j}fr;
+            width: 100%;
+        }
+    }
+}
+@for $i from 1 through 40 {
+    .grid-h-#{$i} {
+        display: grid;
+        grid-template-columns: #{$i}rem;
+        width: 100%;
+        grid-auto-columns: #{$i}rem;
+        grid-auto-flow: column;
+    }
+}
+@for $i from 1 through 40 {
+    .grid-#{$i} {
+        display: grid;
+        grid-template-rows: #{$i}rem;
+        height: 100%;
+        grid-auto-rows: #{$i}rem;
+    } 
+}
+
+.grid-logo-content {
+    display: grid;
+    grid-template-rows: 8rem 1fr;
+    height: 100%;
+}
+.grid-header-content {
+    display: grid;
+    grid-template-rows: 8rem 1fr;
+    height: 100%;
+}
+.grid {
+    display: grid;
+}

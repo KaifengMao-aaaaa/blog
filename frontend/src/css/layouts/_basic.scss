@@ -1,0 +1,74 @@
+@for $i from 1 to 30 {
+    .rd-#{$i} {
+        border-radius: #{$i * 2} + 'rem';
+    }
+}
+.full-w {
+    width: 100%;
+}
+.full-h {
+    height: 100%;
+}
+.auto-h {
+    height: auto;
+}
+.auto-w {
+    width: auto;
+}
+.img-ctr {
+    object-fit: cover;
+    object-position: center;
+}
+.hid {
+    overflow: hidden;
+}
+.auto {
+    overflow: auto;
+    scrollbar-width: none;
+}
+.auto::-webkit-scrollbar {
+  display: none; /* 对于 WebKit (Chrome, Safari 等) 浏览器 */
+}
+.vis {
+    overflow: visible;
+}
+.blk-ctr {
+    justify-content: center;
+    align-items: center;
+}
+.z-1 {
+    z-index: 1;
+}
+.blk-ctr-r {
+    justify-content: end;
+}
+.blk-ctr-l {
+    justify-content: start;
+}
+.blk-ctr-h {
+    align-items: center;
+}
+.blk-ctr-v {
+    justify-content: center;
+}
+.tet-ctr {
+    text-align: center;
+    vertical-align: center;
+}
+.txt-long {
+    white-space: nowrap;
+}
+@for $height from 1 through 20 {
+    @for $factor from 1 through 10 {
+        .h-#{$height}-#{$factor} {
+            height: #{$height * $factor * 0.5}rem;
+        }
+    }
+}
+@for $width from 1 through 20 {
+    @for $factor from 1 through 10 {
+        .w-#{$width}-#{$factor} {
+            width: #{$width * $factor}rem;
+        }
+    }
+}

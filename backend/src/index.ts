@@ -2,6 +2,7 @@ import express, {Express, Request, Response} from "express";
 import privateUserModule from './modules/users/privateApi';
 import privatePostModule from './modules/posts/privateApi';
 import publicUserModule from './modules/users/publicApi';
+import publicPostModule from './modules/posts/publicApi'
 import authorization from './authorization';
 import cookieParser from 'cookie-parser';
 import {PORT} from '../backend_config';
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
 app.use('/api/graphql', graphql);
 // public routers
 app.use('/api/user', publicUserModule);
-
+app.use('/api/post', publicPostModule);
 //authorization middlewares
 app.use('/api', authorization);
 // private routers

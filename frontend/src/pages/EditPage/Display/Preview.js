@@ -1,23 +1,22 @@
 import { useContext, useEffect } from 'react';
-import './preview.css'
 import quit from '../../../utils/imgs/quit.png'
-import WholePost from '../../../components/Posts/wholePost/WholePost';
 import { EditPageContext } from '../../../layouts/EditPageContext';
 import { useNavigate } from 'react-router-dom';
+import Post from '../../../components/Post/Post';
 const Preview = () => {
     const {post} = useContext(EditPageContext);
     const navigate = useNavigate();
-    useEffect(() => {
-    }, [])
+    let url = '';
+    if (post.banner) {
+        url = URL.createObjectURL(post.banner);
+    }
     return (
-        <div>
-
-        <div className='previewDisplay-body'>
-            <img className='previewDisplay-quit' onClick={() => navigate(-1)} src={quit}/>
-            <div className='previewDisplay-body-container'>
-                <WholePost post={post}/>
+        <div className='container-full-auto bg-white pos-abs pos-tr'>
+            <img className='pos-tr icon-cont-lg wrp-circle' onClick={() => navigate(-1)} src={quit}/>
+            <img className='container-full-auto h-10-4 img-ctr mr-bottom-7' src={url}/>
+            <div className='container-14-10-10'>
+                <Post post={post} isPreview={false}/>
             </div>
-        </div>
         </div>
     )
 }

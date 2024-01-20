@@ -4,9 +4,6 @@ import Header from "../components/Header/Header";
 const ProfilePageLayout = () => {
     return (<main>
 
-        <div style={{padding:'30px'}}>
-            <Logo/>
-        </div>
         <div className="home-navbar">
             <Header/>
         </div>

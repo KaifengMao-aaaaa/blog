@@ -1,5 +1,7 @@
 /tests
+/logs/*
 /node_modules
 /build
 /coverage
 /src/modules/database/dump.sql
+/uploads/*

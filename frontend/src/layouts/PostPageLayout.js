@@ -3,8 +3,7 @@ import Logo from "../components/Logo/Logo";
 import Header from "../components/Header/Header";
 const PostPageLayout = () => {
     return (<main>
-        <Logo/>
-        <div className="home-navbar">
+        <div>
             <Header/>
         </div>
         <Outlet/>

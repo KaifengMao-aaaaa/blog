@@ -9,12 +9,15 @@ export function UserProvider({children}) {
     useEffect(() => {
         makeRequest('GET', 'USER_PROFILE', {}, {}, {credentials: 'include'})
         .then((response) => {
-            response.json().then(userInfo => {
-                setUserInfo(userInfo);
-                setGlobalLoading({...globalLoading, userContextLoading: true});
-            });
+            if (response.ok) {
+                response.json().then(userInfo => {
+                    setUserInfo(userInfo);
+                    setGlobalLoading({...globalLoading, userContextLoading: true});
+                });
+            }
         })
     }, [])
+    console.log(userInfo)
     return (<UserContext.Provider value={{userInfo, setUserInfo}}>
         {children}
     </UserContext.Provider>)

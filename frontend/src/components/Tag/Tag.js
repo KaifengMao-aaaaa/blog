@@ -1,17 +1,18 @@
-import styles from './tag.module.css'
 import closeIcon from './close.png';
 import { useContext } from 'react';
 import { EditPageContext } from '../../layouts/EditPageContext';
-function Tag({tag}) {
-    const {blog, setBlog} = useContext(EditPageContext);
-    function handleClickTag(e) {
-        setBlog({...blog, tags: blog.tags.filter(t => tag !== t)});
+function Tag({tag, isEdit, onDelete}) {
+    const styles = {
+        edit: 'bg-white pd-1-5 font-2 flex blk-ctr container-auto-5 rd-1 blk-ctr-h',
+        preview: 'bg-light-green font-dark-dark pd-1-5 font-2 flex blk-ctr container-auto-5 rd-1 blk-ctr-'
     }
-    return (<div className={styles.tag}>
-        {tag}
-        <button onClick={handleClickTag}>
-            <img src={closeIcon} />
-        </button>
+    return (<div className={isEdit ? styles.edit : styles.preview}>
+        <p className='font-b font-2'>
+            {tag}
+        </p>
+        {isEdit && <button className='crs' onClick={onDelete}>
+            <img src={closeIcon} className='icon-cont-xxsm' />
+        </button>}
     </div>)
 }
 export default Tag;

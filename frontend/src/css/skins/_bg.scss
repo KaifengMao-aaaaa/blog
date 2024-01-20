@@ -1,0 +1,24 @@
+.bg-grey {
+    background: #f2f2f2;
+}
+.bg-grey::placeholder {
+    color: black;
+}
+.bg-drak {
+    background: black;
+}
+.bg-white {
+    background: white;
+}
+.bg-green {
+    background-color: $background;
+}
+.bg-light-green {
+    background-color: lighten($background, 30%);
+}
+.bg-black {
+    background: black;
+}
+.bg-yellow {
+    background: yellow;
+}

@@ -1,0 +1,42 @@
+.container-whole-screen {
+    width: 100vw;
+    height: 100vh;
+}
+@for $width from 1 through 30 {
+    @for $height from 1 through 30 {
+        @for $factor from 1 through 10 {
+            .container-#{$width}-#{$height}-#{$factor} {
+                width: #{$width * $factor * 0.5}rem;
+                height: #{$height * $factor * 0.5}rem;
+            }
+        }
+    }
+}
+@for $height from 1 through 30 {
+    .container-full-#{$height} {
+        width: 100%;
+        height: #{$height * 0.5}rem;
+    }
+}
+@for $width from 1 through 30 {
+    .container-#{$width}-full {
+        height: 100%;
+        width: #{$width * 0.5}rem;
+    }
+}
+.container-full-auto {
+    width: 100%;
+    height: auto;
+}
+@for $height from 1 through 30 {
+    .container-auto-#{$height} {
+        width: auto;
+        height: #{$height * 0.5}rem;
+    }
+}
+@for $width from 1 through 30 {
+    .container-#{$width}-auto {
+        width: #{$width * 2}rem;
+        height: auto;
+    }
+}

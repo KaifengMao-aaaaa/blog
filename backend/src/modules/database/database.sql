@@ -3,6 +3,9 @@ Create Table users (
     Name Text Not Null,
     Password Text Not Null
 );
+Create Table categories (
+    name Text primary key
+);
 Create Table get_token (
     user_Id Integer References users(Id),
     token Text,
@@ -14,6 +17,7 @@ Create Table posts (
     banner Text,
     content Text Default '',
     des Text Default '',
+    category Text references categories(name),
     author Integer not null references users(Id),
     is_draft Boolean not null,
     publish_time Timestamp Default CURRENT_TIMESTAMP
@@ -27,7 +31,7 @@ CREATE OR REPLACE VIEW getTags AS
     SELECT STRING_AGG(name, ',') as tags, post_id
     FROM have_tag GROUP BY post_id;
 CREATE OR REPLACE VIEW getPosts AS 
-    SELECT p.id as post_id, title, banner, content, des, author, is_draft, publish_time, tags, name as author_name FROM posts p LEFT JOIN getTags g ON g.post_id = p.Id LEFT JOIN users u ON u.id = p.author; 
+    SELECT p.id as post_id, title, banner, content, des, author, is_draft, publish_time, tags, name as author_name , p.category FROM posts p LEFT JOIN getTags g ON g.post_id = p.Id LEFT JOIN users u ON u.id = p.author; 
 CREATE OR REPLACE FUNCTION getPostsWithPattern(pattern TEXT) 
 RETURNS SETOF getPosts AS 
 $$

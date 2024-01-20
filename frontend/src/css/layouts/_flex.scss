@@ -1,0 +1,25 @@
+
+.flex {
+    display: flex;
+}
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+.flex-wr {
+    flex-wrap: wrap;
+}
+
+.flex-ev {
+    justify-content: space-evenly;
+}
+.flex-be {
+    justify-content: space-between;
+}
+.flex-ar {
+    justify-content: space-around;
+}
+
+
+
+

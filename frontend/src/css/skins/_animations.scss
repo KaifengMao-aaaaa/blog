@@ -1,0 +1,104 @@
+$animations: (
+  prim: (
+    hover: (
+        sdw, ltr
+    )
+  ),
+  empty: (
+    hover: (
+        sdw, ltr
+    )
+  ),
+  dt: (
+    hover: (
+        sdw, bb
+    )
+  )
+);
+@each $style, $states in $animations {
+    @each $state, $effects in $states {
+        @each $effect in $effects {
+            @if $style == prim {
+                @if $state == hover {
+                    @if $effect == ltr {
+                        .#{$style}-#{$state}-#{$effect} {
+                            position: relative;
+                        }
+                        .#{$style}-#{$state}-#{$effect}::before, .#{$style}-#{$state}-#{$effect}::after {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            height: 100%;
+                            width: 0;
+                            z-index: -2;
+                        }
+                        .#{$style}-#{$state}-#{$effect}::before, .#{$style}-#{$state}-#{$effect}::after {
+                            background-color: $background;
+                        }
+                        .#{$style}-#{$state}-#{$effect}::before {
+                            background-color: darken($color: $background, $amount: 7%);
+                        }
+                        .#{$style}-#{$state}-#{$effect}::before {
+                            transition: width 1s ease-in-out;
+                            z-index: -1;
+                        }
+                        .#{$style}-#{$state}-#{$effect}:hover {
+                            background: transparent;
+                        }
+                        .#{$style}-#{$state}-#{$effect}:hover::after, .#{$style}-#{$state}-#{$effect}:hover::before {
+                            width: 100%;
+                        } 
+                    }
+                    @if $effect == sdw {
+                        .#{$style}-#{$state}-#{$effect} {
+                            transition: background-color 0.3s;
+                        }
+                        .#{$style}-#{$state}-#{$effect}:hover {
+                            background-color: darken($background, 10%);;
+                        }
+                    }
+                }
+            }
+            @if $style == empty {
+                @if $state == hover {
+                    @if $effect == sdw {
+                        .#{$style}-#{$state}-#{$effect} {
+                            transition: background-color 0.3s;
+                        }
+                        .#{$style}-#{$state}-#{$effect}:hover {
+                            background-color: $background;;
+                        }
+                    }
+                }
+            }
+            @if $style == dt {
+                @if $state == hover {
+                    @if $effect == sdw {
+                        .#{$style}-#{$state}-#{$effect} {
+                            transition: color 0.1s;
+                        }
+                        .#{$style}-#{$state}-#{$effect}:hover {
+                            color: darken($background, 15%);
+                        }
+                    }
+                    @if $effect == bb {
+                        .#{$style}-#{$state}-#{$effect} {
+                            transition: border-bottom-color 0.1s;
+                        }
+                        .#{$style}-#{$state}-#{$effect}:hover {
+                            border-bottom-color: darken($background, 15%);
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+.hover-ul {
+    text-decoration: none;
+}
+.hover-ul:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,30 @@
+$styles : (solid, dashed);
+@each $style in $styles {
+    @each $dir in $direction {
+        @for $i from 1 to 10 {
+            .bdr-#{$style}-#{$dir}-#{$i} {
+                border-#{$dir}: #{$i * 0.1}rem #{$style} transparent;  
+            }
+        }
+    }
+}
+.bdr-solid-thin {
+    border: 1px solid transparent;
+}
+$styles : (solid, dashed);
+@each $style in $styles {
+    @for $i from 1 to 10 {
+        .bdr-#{$style}-#{$i} {
+            border: #{$i * 0.1}rem #{$style} transparent;  
+        }
+    }
+}
+.bdr-light {
+    border-color: $primary;
+}
+.bdr-dark-light {
+    border-color: darken($primary, 20%);
+}
+.bdr-dark {
+    border-color: $background;
+}

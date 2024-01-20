@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import SidePost from '../../components/Posts/sidePost/SidePost';
-import './sideBar.css'
 import { makeRequest } from '../../utils/requestHelpers';
 import { defaultSolveException } from '../../utils/helpers';
 import { useNavigate } from 'react-router-dom';

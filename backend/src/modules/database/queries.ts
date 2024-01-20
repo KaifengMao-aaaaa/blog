@@ -1,7 +1,7 @@
 const QUERIES = {
     INSERT_USER: "INSERT INTO USERS (id, name, password) VALUES ($1, $2, $3)",
     INSERT_TOKEN: "INSERT INTO GET_TOKEN (user_id, token) VALUES ($1, $2)",
-    INSERT_POST: "INSERT INTO POSTS (id, title, banner, content, des, author, is_draft) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+    INSERT_POST: "INSERT INTO POSTS (id, title, banner, content, des, author, is_draft, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
     INSERT_TAG: 'INSERT INTO HAVE_TAG (post_id, name) VALUES ($1, $2)',
     SELECT_USER: {
         BY_ID: "SELECT * FROM USERS WHERE id = $1",
@@ -15,7 +15,7 @@ const QUERIES = {
     },
     REMOVE_TOKEN: "DELETE FROM GET_TOKEN WHERE user_id = $1 and token = $2",
     REMOVE_POST: "DELETE FROM POSTS WHERE id = $1",
-    UPDATE_POST: "UPDATE POSTS SET title = $1, banner = $2, content = $3, des = $4, author = $5, is_draft = $6 WHERE id = $7",
+    UPDATE_POST: "UPDATE POSTS SET title = $1, banner = $2, content = $3, des = $4, author = $5, is_draft = $6, category = $7 WHERE id = $8",
     REMOVE_DRAFT: 'DELETE FROM POSTS WHERE id = $1' 
 }
 export default QUERIES;

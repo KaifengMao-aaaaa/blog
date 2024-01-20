@@ -1,0 +1,33 @@
+.in-sm {
+    width: 12rem;
+    height: 1rem;
+    padding: 1rem 1.3rem;
+}
+.in-lg {
+    width: 48rem;
+    height: 2rem;
+    padding: 1rem 1.3rem;
+}
+.in-mi {
+    width: 24rem;
+    height: 1.5rem;
+    padding: 1rem 1.3rem;
+    color: black;
+}
+.in-fl {
+    width: 100%;
+    height: 2rem;
+    padding: 1rem 1.3rem;
+    color: black;
+    font-size: 20px;
+}
+.in-rd {
+    border-radius: 2rem;
+}
+.in {
+    background-color: rgb(218, 217, 217);
+    color: $text;
+}
+.in::placeholder {
+    color: black;
+}
