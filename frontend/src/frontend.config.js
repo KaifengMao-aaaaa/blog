@@ -1,0 +1,1 @@
+export const hostIP = 'localhost:4001';

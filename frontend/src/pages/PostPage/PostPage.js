@@ -8,6 +8,7 @@ import { UserContext } from "../../UserContext";
 import { getUrlToEditPage } from "../EditPage/EditPage";
 import Post from "../../components/Post/Post";
 import Tag from "../../components/Tag/Tag";
+import { hostIP } from "../../frontend.config";
 const PostPage = () => {
     const {post_id} = useParams();
     const [post, setPost] = useState(null);
@@ -48,7 +49,7 @@ const PostPage = () => {
         }
 
     }
-    const url = `http://localhost:4001/api/post/uploads/banner-${post.post_id}.png`
+    const url = `http://${hostIP}/api/post/uploads/banner-${post.post_id}.png`
     return (
         <div>
             <section className="container-full-1"></section>
