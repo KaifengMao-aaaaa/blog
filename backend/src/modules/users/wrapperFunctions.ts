@@ -4,7 +4,6 @@ import SQL_query from '../database/queries'
 // import { v4 as uuidv4 } from 'uuid';
 import {jwk_secret} from '../../../backend_config'
 import jwt from 'jsonwebtoken';
-import { hashPassword, validUser } from "../../helpers";
 import authLogger from '../logger/authentication';
 async function register(req: Request, res: Response) {
     try {
@@ -15,7 +14,7 @@ async function register(req: Request, res: Response) {
             return;
         }
         const userId =  Number(String(Math.floor(Math.random() * 100000)) + String(Math.floor(Math.random() * 10000)));
-        await db.queryPool(SQL_query.INSERT_USER, [userId, username, await hashPassword(password)]);
+        await db.queryPool(SQL_query.INSERT_USER, [userId, username, password]);
         res.json({userId});
     } catch(e) {
         res.json('Unknown error').status(403);
@@ -29,7 +28,7 @@ async function login(req: Request, res: Response) {
         if (response.rows.length === 0) {
             res.status(403).send({err: 'Invalid username or password'});
             return;
-        } else if (!(await validUser(password, response.rows[0].password))) {
+        } else if (!(password === response.rows[0].password)) {
             res.status(403).send('Invalid username or password');
             return;
         } else {
