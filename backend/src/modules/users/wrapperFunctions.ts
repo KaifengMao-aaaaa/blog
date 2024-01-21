@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import db from "../database/db";
 import SQL_query from '../database/queries'
 // import { v4 as uuidv4 } from 'uuid';
-import {jwk_secret} from '../../../backend_config'
+import {jwk_secret, registration_enable} from '../../../backend_config'
 import jwt from 'jsonwebtoken';
 import authLogger from '../logger/authentication';
 async function register(req: Request, res: Response) {
@@ -14,8 +14,12 @@ async function register(req: Request, res: Response) {
             return;
         }
         const userId =  Number(String(Math.floor(Math.random() * 100000)) + String(Math.floor(Math.random() * 10000)));
-        await db.queryPool(SQL_query.INSERT_USER, [userId, username, password]);
-        res.json({userId});
+        if (registration_enable) {
+            await db.queryPool(SQL_query.INSERT_USER, [userId, username, password]);
+            res.json({userId});
+        } else {
+            res.send('Registration has blocked')
+        }
     } catch(e) {
         res.json('Unknown error').status(403);
     }
