@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import profileIconImg from '../../utils/imgs/profile.png'
-import LinkIcon from '../../utils/imgs/linkIcon.png'
 import arrowImg from '../../utils/imgs/arrow.png';
 import timeSpanImg from '../../utils/imgs/timeSpan.png'
 import { timeStampToDate } from '../../utils/helpers';
@@ -9,7 +8,7 @@ import {marked} from 'marked';
 export default function Post({post, isPreview}) {
 
     const [isOpenTable, setIsOpenTable] = useState(false);
-    const tableStyle = isOpenTable ? 'pd-0-4 container-full-5 gap-1 bg-black blk-ctr-h flex crs' : 'mr-6-0 pd-0-4 container-full-5 rd-1 gap-1 bg-black blk-ctr-h flex crs'; 
+    const tableStyle = isOpenTable ? 'pd-0-4 container-full-5 gap-1 bg-green blk-ctr-h flex crs' : 'mr-6-0 pd-0-4 container-full-5 rd-1 gap-1 bg-green blk-ctr-h flex crs'; 
     function handleClickTable(e) {
         setIsOpenTable(prev => !prev);
     }
@@ -47,6 +46,14 @@ export default function Post({post, isPreview}) {
 }
 function markdownToComponent(content) {
     const html = marked(content);
+    console.log(html)
+    const contentComponents = renderHtml(html);
+        return <div className='markdown'>
+            {contentComponents}
+        </div>;
+}
+
+function renderHtml(html) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const elements = doc.body.childNodes;
@@ -59,28 +66,54 @@ function markdownToComponent(content) {
         H6 : 0
     }
     const contentComponents = Array.from(elements).map((node, index) => {
-
+        const id = `${node.nodeName}-${H_nums[node.nodeName] + 1}`;
         if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(node.nodeName)) {
             H_nums[node.nodeName] += 1;
         }
-        const id = `${node.nodeName}-${H_nums[node.nodeName]}`;
-        const key = `element-${index}`
         switch (node.nodeName) {
             case 'H1':
+                return <h1 key={index} id={id}>{node.textContent}</h1>
             case 'H2':
-                return <h2 className='mr-bottom-9 font-6 font-t mr-top-20' key={key} id={id} dangerouslySetInnerHTML={{__html: node.innerHTML}}/>
+                return <h2 key={index}  id={id}>{node.textContent}</h2>
             case 'H3':
-                return <h4 className='mr-bottom-9 font-4 font-t mr-top-20' key={key} id={id} dangerouslySetInnerHTML={{ __html: node.innerHTML }} />;
+                return <h3 key={index}  id={id}>{node.textContent}</h3>
             case 'H4':
-                return <h4 className='mr-bottom-9 font-4 font-t mr-top-20' key={key} id={id} dangerouslySetInnerHTML={{ __html: node.innerHTML }} />;
+                return <h4 key={index}  id={id}>{node.textContent}</h4>
             case 'H5':
+                return <h5 key={index}  id={id}>{node.textContent}</h5>
             case 'H6':
-                return <h4 className='mr-bottom-9 font-4 font-t mr-top-20' key={key} id={id} dangerouslySetInnerHTML={{ __html: node.innerHTML }} />;
-            case 'P':
-                return <p className='font-3 font-b mr-bottom-8 font-h-10' key={key} dangerouslySetInnerHTML={{ __html: node.innerHTML }} />;
+                return <h6 key={index}  id={id}>{node.textContent}</h6>
+            case 'HR':
+                return <hr key={index}/>;
             default:
-                return null;
+                return renderNode(node);
             }
-        });
-        return contentComponents;
+    });
+    return contentComponents
 }
+function renderNode(node) {
+    const Type = node.nodeName.toLowerCase();
+    switch (node.nodeName) {
+        case 'UL':
+        case 'OL':
+        case 'CODE': 
+        case 'PRE':
+        case 'P':
+        case 'HR':
+        case 'BLOCKQUOTE':
+        case 'STRONG':
+        case 'EM': 
+        case 'LI':
+            return <Type>{renderChildren(node)}</Type>
+        default:
+            return node.textContent;
+    }
+}
+
+function renderChildren(node) {
+    return Array.from(node.childNodes).map((child, index) => {
+        return renderNode(child);
+    });
+}
+
+
