@@ -18,7 +18,7 @@ async function register(req: Request, res: Response) {
             await db.queryPool(SQL_query.INSERT_USER, [userId, username, password]);
             res.json({userId});
         } else {
-            res.send('Registration has blocked')
+            res.send('Registration has blocked').status(403);
         }
     } catch(e) {
         res.json('Unknown error').status(403);
