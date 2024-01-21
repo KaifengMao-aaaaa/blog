@@ -62,7 +62,7 @@ function Publish() {
         return <Loading/>;
     }
     if (redirect === 'HOME') {
-        return <Navigate to={'/1'}/>
+        return <Navigate to={'/home/1'}/>
     }
     const regex = new RegExp(post.category, 'i');
     return (

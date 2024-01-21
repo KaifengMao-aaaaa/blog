@@ -37,7 +37,7 @@ const PostPage = () => {
     }
     function handleDeleteClick(e) {
         makeRequest('DELETE', 'POST_DELETEONE', {post_id},{'Content-Type': 'application/json'}, {credentials: 'include'})
-        navigate(`/1`);
+        navigate(`/home/1`);
     }
     function handleClick(e) {
         const tmp = e.currentTarget.id;
